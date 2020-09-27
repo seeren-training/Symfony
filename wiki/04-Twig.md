@@ -8,6 +8,7 @@
 *  🔖 **Block**
 *  🔖 **Condition**
 *  🔖 **Itération**
+*  🔖 **Webpack Encore**
 
 > Nous aurons besoin de revenir su cette fiche concernant les conditions et les itérations.
 
@@ -145,7 +146,7 @@ ___
 
 👨🏻‍💻 Manipulation
 
-Proposez une organisation des templates, les fichiers inclus et réutilisables, la déclaration des blocs, l'héritage.
+Proposez une organisation des templates, les fichiers inclus et réutilisables, la déclaration des blocs, l'héritage et appliquez la.
 
 ___
 
@@ -195,3 +196,56 @@ Il est possible d'itérer et d'ajouter une condition pour chaque itération.
     {{ user.username }}
 {% endfor %}
 ```
+
+___
+
+## 📑 [Webpack Encore](https://symfony.com/doc/current/frontend.html)
+
+Avoir un système de template c'est bien, mais comment intégrer vos assets. Symfony propose une solution simplifiée pour l'utilisation de webpack.
+
+* *Installer Webpack Encore*
+
+```bash
+composer require symfony/webpack-encore-bundle
+```
+
+* *Télécharger les pakages front-end*
+
+```bash
+npm install
+```
+
+* *Configurer*
+
+Si vous souhaitez modifier les points d'entré, utiliser un pré-processor ou autre pre-built setting, rendez vous sur le fichier webpack.config.js et sur sa documentation.
+
+* *Utiliser*
+
+Pour utiliser Webpack, des scripts sont présents dans le package.json.
+
+```bash
+npm run watch
+```
+
+* *Intégrer*
+
+Pour intégrer les fichiers qui sont générés dans "public/build", des [extensions twig pour webpack-encore](https://symfony.com/doc/current/frontend/encore/simple-example.html#configuring-encore-webpack) sont prévues afin de créer automatiquement les liens.
+
+Les balise link:
+
+```twig
+{{ encore_entry_link_tags('app') }}
+```
+
+Les balise script:
+
+```twig
+{{ encore_entry_script_tags('app') }}
+```
+___
+
+👨🏻‍💻 Manipulation
+
+Utiliser webpack-encore et compléter vos templates pour utiliser un framework CSS. Proposer les éléments de navigation en utilisant le fonction concernant webpack et `path`.
+
+___
