@@ -8,7 +8,8 @@ ___
 
 ## Prérequis
 
-Avoir participé au module PHP Objet
+Avoir participé au module [
+PHP-Object](https://github.com/seeren-training/PHP-Object)
 
 ___
 
