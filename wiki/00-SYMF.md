@@ -6,7 +6,7 @@ ___
 
 ## Prérequis
 
-* Avoir la suivi le training [PHP-Objet](https://github.com/seeren-training/PHP-Object)
+* Avoir la suivi le training [PHP-Object](https://github.com/seeren-training/PHP-Object)
 
 ___
 
