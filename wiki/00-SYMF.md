@@ -12,18 +12,18 @@ ___
 
 ## Sommaire
 
-* [Installer](https://github.com/seeren-training/PHP-Object/wiki/01)
-* [Découvrir](https://github.com/seeren-training/PHP-Object/wiki/02)
-* [Routes](https://github.com/seeren-training/PHP-Object/wiki/03)
-* [Twig](https://github.com/seeren-training/PHP-Object/wiki/04)
-* [Entities](https://github.com/seeren-training/PHP-Object/wiki/05)
-* [Forms](https://github.com/seeren-training/PHP-Object/wiki/06)
-* [Doctrine](https://github.com/seeren-training/PHP-Object/wiki/07)
-* [Services](https://github.com/seeren-training/PHP-Object/wiki/08)
-* [Security](https://github.com/seeren-training/PHP-Object/wiki/09)
-* [Events](https://github.com/seeren-training/PHP-Object/wiki/10)
-* [Commandes](https://github.com/seeren-training/PHP-Object/wiki/11)
-* [Traduction](https://github.com/seeren-training/PHP-Object/wiki/12)
+* [Installer](https://github.com/seeren-training/Symfony/wiki/01)
+* [Découvrir](https://github.com/seeren-training/Symfony/wiki/02)
+* [Routes](https://github.com/seeren-training/Symfony/wiki/03)
+* [Twig](https://github.com/seeren-training/Symfony/wiki/04)
+* [Entities](https://github.com/seeren-training/Symfony/wiki/05)
+* [Forms](https://github.com/seeren-training/Symfony/wiki/06)
+* [Doctrine](https://github.com/seeren-training/Symfony/wiki/07)
+* [Services](https://github.com/seeren-training/Symfony/wiki/08)
+* [Security](https://github.com/seeren-training/Symfony/wiki/09)
+* [Events](https://github.com/seeren-training/Symfony/wiki/10)
+* [Commandes](https://github.com/seeren-training/Symfony/wiki/11)
+* [Traduction](https://github.com/seeren-training/Symfony/wiki/12)
 
 ___
 
