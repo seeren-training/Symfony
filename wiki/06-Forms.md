@@ -67,7 +67,6 @@ $builder->add('email', EmailType::class)
 
 Les types sont groupés par catégories.
 
-
 * Text Fields
 * Choice Fields
 * Date and Time Fields
@@ -187,5 +186,52 @@ ___
 👨🏻‍💻 Manipulation
 
 Personnalisez l'affichage de vos formulaires
+
+___
+
+## 📑 [Constraint](https://symfony.com/doc/current/validation.html#constraints)
+
+Pour valider votre formulaire, vous devez contraindre vos champs à une valeur acceptable. La contrainte peut se spécifier aussi bien sur les Types que sur les Entities.
+
+Les contraintes disponibles sont nombreuses, chaque documentation doit être étudiée avant de l'appliquer.
+
+```php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class User
+{
+    /**
+     * @Assert\NotBlank
+     * @Assert\Length(min=3)
+     */
+    private $email;
+}
+```
+
+De cette façon il est possible de prendre en compte les erreurs au niveau du formulaire qui se retrouve invalide.
+
+```twig
+{{ form_errors(form.email) }}
+```
+
+Quand votre formulaire est submit et valid vous souhaitez certainement étudier l'accès aux données.
+
+```php
+$entity = new Foo();
+$form = $this->createForm(FooType::class, $entity);
+$form->handleRequest($request);
+if ($form->isSubmitted() && $form->isValid()) {
+    dump("Persist Entity");
+}
+return $this->render('foo/new.html.twig', [
+    "form" => $form->createView()
+]);
+```
+
+___
+
+👨🏻‍💻 Manipulation
+
+Préparez vous à insérer la donnée.
 
 ___

@@ -19,11 +19,9 @@ ___
 * [Entities](https://github.com/seeren-training/Symfony/wiki/05)
 * [Forms](https://github.com/seeren-training/Symfony/wiki/06)
 * [Doctrine](https://github.com/seeren-training/Symfony/wiki/07)
-* [Services](https://github.com/seeren-training/Symfony/wiki/08)
-* [Security](https://github.com/seeren-training/Symfony/wiki/09)
-* [Events](https://github.com/seeren-training/Symfony/wiki/10)
-* [Commandes](https://github.com/seeren-training/Symfony/wiki/11)
-* [Traduction](https://github.com/seeren-training/Symfony/wiki/12)
+* [Security](https://github.com/seeren-training/Symfony/wiki/08)
+* [Services](https://github.com/seeren-training/Symfony/wiki/09)
+* [Traduction](https://github.com/seeren-training/Symfony/wiki/10)
 
 ___
 
