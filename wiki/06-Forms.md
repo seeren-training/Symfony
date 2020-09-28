@@ -1,0 +1,191 @@
+# Forms
+
+*  🔖 **Build**
+*  🔖 **Display**
+*  🔖 **Validate**
+
+Symfony permet d'automatiser la création, la validation et l'affichage de formulaires.
+
+___
+
+## 📑 [Build](https://symfony.com/doc/current/forms.html)
+
+La création de formulaire passe par la création d'une classe puis son exploitation.
+
+### 🏷️ **Make**
+
+Pour créer un formulaire. Il faut spécifier le nom de la classe et l'entity qui est utilisé par le formulaire.
+
+```env
+bin/console make:form
+```
+
+### 🏷️ **Build**
+
+Dans le controller, il faut construire le formulaire et la passer à la vue en créant une vue de formulaire.
+
+*Controller*
+
+```php
+$entity = new Foo();
+$form = $this->createForm(FooType::class, $entity);
+return $this->render('foo/new.html.twig', [
+    "form" => $form->createView()
+]);
+```
+
+Si voter entity possède des classes en relation, vous aurez peut être un problème de conversion de l'instance au format chaine de caractère. Il y a plusieurs solutions, comme implémenter la méthode `__toString` dans la classe en relation. Il faut renvoyer l'attribut qui qualifie la valeur.
+
+*Entity*
+
+```php
+public function __toString()
+{
+    return $this->name;
+}
+```
+
+___
+
+👨🏻‍💻 Manipulation
+
+Créer vos formulaires
+
+___
+
+### 🏷️ **Types**
+
+Chaque attribut de votre Entity peut posséder un élément HTML spécifiques. Par exemple un type password aura un style différent d'un type date. Il est possible de spécifier les types attributs par attributs.
+
+> La modifications des types se fait en second argument de la méthode `add` du builder.
+
+*Type*
+
+```php
+$builder->add('email', EmailType::class)
+```
+
+Les types sont groupés par catégories.
+
+
+* Text Fields
+* Choice Fields
+* Date and Time Fields
+* Other Fields
+* Field Groups
+* Hidden Fields
+* Buttons
+* Base Fields
+
+Pour chaque catégories il faut suivre la documentation et utiliser le type correctement: https://symfony.com/doc/current/reference/forms/types.html
+
+Certains types attendent des options en troisième argument de `add`. Par exemple le type entity vous permet d'agréger une entité, un select se fait automatiquement.
+
+```php
+$builder
+    ->add('bar', EntityType::class, [
+        "class" => Bar::class,
+        "multiple" => true,
+        "expanded" => false
+    ])
+```
+
+### 🏷️ **Request**
+
+Pour que le formulaire peuple l'entity des valeurs saisies, il faut fournir la request au formulaire. La Request peut s'obtenir en la déclarent en argument de l'action du Controller.
+
+```php
+public function new(Request $request)
+{
+    $entity = new Foo();
+    $form = $this->createForm(FooType::class, $entity);
+    $form->handleRequest($request);
+```
+
+___
+
+👨🏻‍💻 Manipulation
+
+Personnalisez les types et passez la requête à vos formulaires.
+
+___
+
+## 📑 [Display](https://symfony.com/doc/current/form/form_customization.html)
+
+Pour afficher le formulaire, plusieurs functions sont disponibles dans twig.
+
+### 🏷️ **Start**
+
+Un formulaire doit s'ouvrir, `form_start` permet de créer l'ouverture du tag <form>
+
+```twig
+{{ form_start(form) }}
+```
+
+Pour enlever la validation client il est possible d'ajouter des attributs html.
+
+```twig
+{{ form_start(form, { attr: { novalidate: 'novalidate' }}) }}
+```
+
+### 🏷️ **End**
+
+Pour fermer la balise form il faut utiliser `form_end`.
+
+```twig
+{{ form_end(form) }}
+```
+
+### 🏷️ **Row**
+
+Pour afficher le label, les erreurs, le widget et le help d'un élément de formulaire il faut utiliser la fonction `form_row`.
+
+![image](https://raw.githubusercontent.com/seeren-training/Symfony/master/wiki/resources//form_row.png)
+
+Il est possible de demander ce rendu pour l'ensemble du formulaire.
+
+```twig
+{{ form_widget(form) }}
+```
+
+Il est possible de cibler chaque élément du formulaire.
+
+```twig
+{{ form_widget(form.email) }}
+```
+
+### 🏷️ **Label**
+
+Le label possède trois arguments.
+
+Le second permet de surcharger le label.
+
+```twig
+{{ form_label(form.email, "Email") }}
+```
+
+Le troisème permet d'ajouter des attributs en utilisant label_attr.
+
+```twig
+{{ form_label(form.email, "Email", {
+    label_attr: {
+        class: 'form-group'
+    }
+}) }}
+```
+
+### 🏷️ **Submit**
+
+Pour pouvoir réutiliser les formulaires, il est conseillé de fournir le submit dans la vue en utilisant un bouton.
+
+```html
+<button type="submit">Envoyer</button>
+```
+
+___
+
+👨🏻‍💻 Manipulation
+
+Personnalisez l'affichage de vos formulaires
+
+___

@@ -50,6 +50,15 @@ Il est possible de créer une variable.
 {% set foo = 'foo' %}
 ```
 
+### 🏷️ **Globales**
+
+Dans un template des varibles globales au niveau du template sont disponibles pour alléger le passage de variable au niveau du controller
+
+```twig
+{{ dump(app.request) }}
+```
+
+> Les attributs disponibles sur app: https://symfony.com/doc/4.0/templating/app_variable.html
 ___
 
 ## 📑 [Filtres](https://twig.symfony.com/doc/3.x/filters/index.html)
@@ -70,7 +79,7 @@ ___
 {{ path('foo_index')}}
 ```
 
-Les fonctions permettent d'obtenir une valeur de retour affichée dans le template.
+Les fonctions permettent d'obtenir une valeur de retour affichée dans le template. Le catalogue des fonctions est à étudier pour nottament rendre un controller dans un template.
 
 > Symfony ajoute des fonctions à Twig: https://symfony.com/doc/current/reference/twig_reference.html#functions
 
