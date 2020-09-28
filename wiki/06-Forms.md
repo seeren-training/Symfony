@@ -195,6 +195,8 @@ Pour valider votre formulaire, vous devez contraindre vos champs à une valeur a
 
 Les contraintes disponibles sont nombreuses, chaque documentation doit être étudiée avant de l'appliquer.
 
+*Entity*
+
 ```php
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -215,6 +217,8 @@ De cette façon il est possible de prendre en compte les erreurs au niveau du fo
 ```
 
 Quand votre formulaire est submit et valid vous souhaitez certainement étudier l'accès aux données.
+
+*Controller*
 
 ```php
 $entity = new Foo();
