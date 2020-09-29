@@ -13,16 +13,12 @@ class UserController extends AbstractController
      */
     public function new()
     {
-        $obj = new \stdClass();
-        $obj->hello = "world";
-
-        return $this->render('user/new.html.twig', [
-            'foo' => $obj,
-        ]);
+        return $this->render('user/new.html.twig', []);
     }
 
     /**
-     * @Route("/user/login", name="user_login")
+     *
+     * @Route("/login", name="user_login")
      */
     public function login()
     {
@@ -40,4 +36,5 @@ class UserController extends AbstractController
             'controller_name' => 'UserController',
         ]);
     }
+
 }

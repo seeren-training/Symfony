@@ -23,9 +23,6 @@ class PostController extends AbstractController
      */
     public function show(int $id)
     {
-
-
-
         return $this->render('post/post/show.html.twig', [
             'controller_name' => 'PostController',
         ]);
