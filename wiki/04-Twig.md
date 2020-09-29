@@ -10,7 +10,7 @@
 *  🔖 **Itération**
 *  🔖 **Webpack Encore**
 
-> Nous aurons besoin de revenir su cette fiche concernant les conditions et les itérations.
+> Nous aurons besoin de revenir sur cette fiche concernant les conditions et les itérations.
 
 ___
 
@@ -50,15 +50,6 @@ Il est possible de créer une variable.
 {% set foo = 'foo' %}
 ```
 
-### 🏷️ **Globales**
-
-Dans un template des varibles globales au niveau du template sont disponibles pour alléger le passage de variable au niveau du controller
-
-```twig
-{{ dump(app.request) }}
-```
-
-> Les attributs disponibles sur app: https://symfony.com/doc/4.0/templating/app_variable.html
 ___
 
 ## 📑 [Filtres](https://twig.symfony.com/doc/3.x/filters/index.html)
@@ -73,13 +64,13 @@ Les variables peuvent être modifiées par des filtres. Les filtres sont sépar�
 
 ___
 
-## 📑 [Functions](https://twig.symfony.com/doc/3.x/filters/index.html)
+## 📑 [Functions](https://twig.symfony.com/doc/2.x/functions/index.html)
 
 ```twig
 {{ path('foo_index')}}
 ```
 
-Les fonctions permettent d'obtenir une valeur de retour affichée dans le template. Le catalogue des fonctions est à étudier pour nottament rendre un controller dans un template.
+Les fonctions permettent d'obtenir une valeur de retour affichée dans le template.
 
 > Symfony ajoute des fonctions à Twig: https://symfony.com/doc/current/reference/twig_reference.html#functions
 
