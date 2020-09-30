@@ -1,0 +1,15 @@
+body {
+    background: #f1f2f3;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    padding: 3rem 1.5rem 3rem !important;
+}
+
