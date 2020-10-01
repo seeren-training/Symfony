@@ -1,9 +1,10 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="is-size-4 navbar-item" href="https://bulma.io">
+        <a class="is-size-4 navbar-item" href="/">
             My Reedit
         </a>
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+           data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -14,12 +15,27 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-primary" href="{{ path('user_new') }}">
-                        <strong>Sign up</strong>
-                    </a>
-                    <a class="button is-light" href="{{ path('user_login') }}">
-                        Log in
-                    </a>
+                    {% if is_granted("ROLE_USER") %}
+                        {% if 'post_new' == app.request.get('_route') %}
+                            <a class="button is-primary" href="{{ path('post_show_all') }}">
+                                <strong>Post list</strong>
+                            </a>
+                        {% else %}
+                            <a class="button is-primary" href="{{ path('post_new') }}">
+                                <strong>New Post</strong>
+                            </a>
+                        {% endif %}
+                        <a class="button is-light" href="{{ path('security_logout') }}">
+                            Logout
+                        </a>
+                    {% else %}
+                        <a class="button is-primary" href="{{ path('user_new') }}">
+                            <strong>Sign up</strong>
+                        </a>
+                        <a class="button is-light" href="{{ path('security_login') }}">
+                            Log in
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

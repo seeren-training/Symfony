@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login {{ parent() }}{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <form class="my-5" method="post" novalidate>
+            <h1 class="is-size-2 my-5">Login</h1>
+            <label class="label" for="inputEmail">Email</label>
+            {% if error %}
+                <div class="notification is-danger is-light">
+                    <a class="delete"></a>
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+            <div class="control">
+                <input class="input" type="email" value="{{ last_username }}" name="email" id="inputEmail"
+                       required
+                       autofocus>
+            </div>
+            <label class="label" for="inputPassword">Password</label>
+            <div class="control">
+                <input class="input" type="password" name="password" id="inputPassword" class="form-control" required>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="my-3">
+                <label class="checkbox">
+                    <input type="checkbox" name="_remember_me">
+                    Remember me
+                </label>
+            </div>
+
+            <div class="control my-4">
+                <button class="button is-primary" type="submit">
+                    Log in
+                </button>
+            </div>
+        </form>
+    </main>
+{% endblock %}

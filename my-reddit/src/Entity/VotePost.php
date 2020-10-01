@@ -74,4 +74,5 @@ class VotePost
 
         return $this;
     }
+
 }
