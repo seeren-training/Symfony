@@ -98,9 +98,9 @@ ___
 
 ## 📑 [Relations](https://symfony.com/doc/current/doctrine/associations.html)
 
-Une entité peut être en relation avec d'autres par les relations OneToOne, OneToMany et ManyToMany.
+Une entité peut être en relation avec d'autres par les relations `OneToOne`, `OneToMany` et `ManyToMany`.
 
-Au moment de choisir le type de la colonne, il est possible de demander `?` pour avoir un tutoriel sur les relations et nous propose de réfléchir pour proposer une de ces 3 relations.
+Au moment de choisir le type de la colonne, il est possible de demander "`?`" pour avoir un tutoriel sur les relations et nous propose de réfléchir pour proposer une de ces 3 relations.
 
 ___
 

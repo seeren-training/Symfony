@@ -39,7 +39,8 @@ Si vous pensiez créez vous mêmes votre login/logout vous n'aurez pas cette opp
 
 ### 🏷️ **Signup**
 
-En revanche pour utiliser le login il faut posséder dans la base de données un utilisateur avec un mot de passe haché avec une implémentation de `UserPasswordEncoderInterface`.
+En revanche pour utiliser le login il faut posséder dans la base de données un utilisateur avec un mot de passe haché avec une implémentation de `UserPasswordEncoderInterface`. il est possible de générer votre création de compte avec `make:crud` ou `make:registration-form`.
+
 ___
 
 👨🏻‍💻 Manipulation
@@ -75,7 +76,7 @@ Il est possible de vérifier si un utilisateur est connecté.
 
 ```php
 if ($this->getUser()) {
-    return $this->redirectToRoute('post_show_all');
+    return $this->redirectToRoute('some_route');
 }
 ```
 
@@ -83,7 +84,7 @@ Il est possible de vérifier son rôle.
 
 ```php
 if (!$this->isGranted("ROLE_USER")) {
-    return $this->redirectToRoute('post_show_all');
+    return $this->redirectToRoute('some_route');
 }
 ```
 

@@ -20,8 +20,9 @@ ___
 * [Forms](https://github.com/seeren-training/Symfony/wiki/06)
 * [Doctrine](https://github.com/seeren-training/Symfony/wiki/07)
 * [Security](https://github.com/seeren-training/Symfony/wiki/08)
-* [Services](https://github.com/seeren-training/Symfony/wiki/09)
-* [Traduction](https://github.com/seeren-training/Symfony/wiki/10)
+* [Services](https://github.com/seeren-Session/Symfony/wiki/09)
+* [Session](https://github.com/seeren-training/Symfony/wiki/10)
+* [Traduction](https://github.com/seeren-training/Symfony/wiki/11)
 
 ___
 

@@ -55,7 +55,7 @@ ___
 
 ### 🏷️ **Types**
 
-Chaque attribut de votre Entity peut posséder un élément HTML spécifiques. Par exemple un type password aura un style différent d'un type date. Il est possible de spécifier les types attributs par attributs.
+Chaque attribut de votre Entity peut posséder un élément HTML spécifiques. Par exemple un type password aura un style différent d'un type date. Il est possible de spécifier la valeur de l'attribut html type par champ du formulaire.
 
 > La modifications des types se fait en second argument de la méthode `add` du builder.
 
@@ -168,7 +168,7 @@ Le troisème permet d'ajouter des attributs en utilisant label_attr.
 ```twig
 {{ form_label(form.email, "Email", {
     label_attr: {
-        class: 'form-group'
+        class: 'my-class'
     }
 }) }}
 ```
