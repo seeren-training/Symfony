@@ -21,7 +21,7 @@ class UserType extends AbstractType
             ->add('email',  EmailType::class)
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'The confirmation must match'
+                'invalid_message' => 'The confirmation must match.'
             ])
         ;
     }

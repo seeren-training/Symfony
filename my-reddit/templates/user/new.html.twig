@@ -12,8 +12,12 @@
 
         <h1 class="is-size-2 my-5">Signup</h1>
 
+        {% if form.vars.errors|length %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form)} %}
+        {% endif %}
+
         {{ form_label(form.pseudo, "", { label_attr: { class: 'label' }}) }}
-        {% if not form.pseudo.vars.valid %}
+        {% if form.pseudo.vars.valid == false %}
             {% include '_shared/alert.html.twig' with { error: form_errors(form.pseudo)} %}
         {% endif %}
         {{ form_widget(form.pseudo, { attr: { class: 'input', autofocus: 'autofocus' }}) }}
@@ -33,9 +37,7 @@
         {{ form_widget(form.password.second, { attr: { class: 'input' }}) }}
 
         <div class="control my-4">
-            <button class="button is-primary" type="submit">
-                Sign up
-            </button>
+            <button class="button is-primary" type="submit">Sign up</button>
         </div>
 
         {{ form_end(form) }}
