@@ -4,7 +4,7 @@
 *  🔖 **Login**
 *  🔖 **Roles**
 
-Le concept de séurité fait référence au composant de sécurité qui gère les authentification et autorisations des utilisateurs.
+Le concept de sécurité fait référence au composant de sécurité qui gère les authentification et autorisations des utilisateurs.
 
 ___
 
@@ -17,7 +17,6 @@ bin/console make:user
 ```
 
 Un utilisateur est fait pour être authentifié et Symfony vous permet de générer cette authentification, sa configuration, son controller, sa vue.
-
 
 ___
 
@@ -55,7 +54,7 @@ Il est possible de restreindre l'accès à des actions en fonction du rôle poss
 
 ### 🏷️ **[Annotation](https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html)**
 
-Chaque utilisateur possède au moins un `ROLE_USER`. Un utilisateur anonyme possède le role `IS_ANONYMOUS`.
+Chaque utilisateur possède au moins un `ROLE_USER`. Un utilisateur anonyme possède le rôle `IS_ANONYMOUS`.
 
 Il est possible avec avec une annotation de rediriger l'utilisateur vers la page de login selon l'exemple suivant.
 
