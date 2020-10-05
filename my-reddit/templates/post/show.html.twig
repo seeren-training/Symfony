@@ -3,7 +3,43 @@
 {% block title %}Post {{ parent() }}{% endblock %}
 
 {% block body %}
-
-    <h1>Post</h1>
-
+    <main class="container">
+        <h1 class="is-size-2 my-5">Post # {{ post.id }}</h1>
+        <br/>
+        <div class="container is-max-widescreen box">
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                        {{ post.user.pseudo }}
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
+                        {{ post.createdAt|date }}
+                    </div>
+                </div>
+            </div>
+            <div class="notification is-white">
+                <nav class="level is-mobile">
+                    <div class="level-item has-text-left">
+                        <div>
+                            <p class="heading">Votes</p>
+                            <p class="title">{{ post.total }}</p>
+                        </div>
+                    </div>
+                    <div class="level-item has-text-centered">
+                        <div>
+                            <p class="heading">Title</p>
+                            <p class="title">
+                                <a href="{{ path('post_show', { id: post.id }) }}">
+                                    {{ post.title }}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </nav>
+                <p>{{ post.content }}</p>
+            </div>
+        </div>
+    </main>
 {% endblock %}

@@ -4,6 +4,35 @@
 
 {% block body %}
     <main class="container">
+
+        {{ form_start(form, { attr: {
+            novalidate: 'novalidate',
+            class: 'my-5'
+        }}) }}
+
         <h1 class="is-size-2 my-5">New Post</h1>
+
+        {% if form.vars.errors|length %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form)} %}
+        {% endif %}
+
+        {{ form_label(form.title, "", { label_attr: { class: 'label' }}) }}
+        {% if form.title.vars.valid == false %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form.title)} %}
+        {% endif %}
+        {{ form_widget(form.title, { attr: { class: 'input', autofocus: 'autofocus' }}) }}
+
+        {{ form_label(form.content, "", { label_attr: { class: 'label' }}) }}
+        {% if not form.content.vars.valid %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form.content)} %}
+        {% endif %}
+        {{ form_widget(form.content, { attr: { class: 'input' }}) }}
+
+        <div class="control my-4">
+            <button class="button is-primary" type="submit">Create</button>
+        </div>
+
+        {{ form_end(form) }}
+
     </main>
 {% endblock %}

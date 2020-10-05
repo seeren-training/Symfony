@@ -6,6 +6,8 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +25,8 @@ class UserController extends AbstractController
      * @param UserPasswordEncoderInterface $encoder
      * @param UserRepository $repo
      * @return Response
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function new(
         Request $request,
