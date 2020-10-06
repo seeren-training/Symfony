@@ -16,17 +16,17 @@
             {% include '_shared/alert.html.twig' with { error: form_errors(form)} %}
         {% endif %}
 
-        {{ form_label(form.pseudo, "", { label_attr: { class: 'label' }}) }}
-        {% if form.pseudo.vars.valid == false %}
-            {% include '_shared/alert.html.twig' with { error: form_errors(form.pseudo)} %}
-        {% endif %}
-        {{ form_widget(form.pseudo, { attr: { class: 'input', autofocus: 'autofocus' }}) }}
-
         {{ form_label(form.email, "", { label_attr: { class: 'label' }}) }}
         {% if not form.email.vars.valid %}
             {% include '_shared/alert.html.twig' with { error: form_errors(form.email)} %}
         {% endif %}
         {{ form_widget(form.email, { attr: { class: 'input' }}) }}
+
+        {{ form_label(form.pseudo, "", { label_attr: { class: 'label' }}) }}
+        {% if form.pseudo.vars.valid == false %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form.pseudo)} %}
+        {% endif %}
+        {{ form_widget(form.pseudo, { attr: { class: 'input', autofocus: 'autofocus' }}) }}
 
         {{ form_label(form.password.first, "Password", { label_attr: { class: 'label' }}) }}
         {% if not form.password.vars.valid %}
