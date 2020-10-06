@@ -11,6 +11,7 @@ class VoteController extends AbstractController
 
     /**
      * @IsGranted("ROLE_USER")
+     *
      * @Route("/post/{id<\d+>}/vote/down", name="post_vote_down")
      */
     public function down(int $id)
@@ -22,6 +23,7 @@ class VoteController extends AbstractController
 
     /**
      * @IsGranted("ROLE_USER")
+     *
      * @Route("/post/{id<\d+>}/vote/up", name="post_vote_up")
      */
     public function up(int $id)

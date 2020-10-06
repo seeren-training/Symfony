@@ -5,8 +5,6 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
 
 class SearchController extends AbstractController
 {
@@ -18,11 +16,6 @@ class SearchController extends AbstractController
      */
     public function results(): Response
     {
-
-        return $this->denyAccessUnlessGranted("ROLE_ADMIN");
-
-//        dump();
-
         return $this->render('search/results.html.twig', [
             'controller_name' => 'SearchController',
         ]);
@@ -30,6 +23,7 @@ class SearchController extends AbstractController
 
     /**
      * @Route("/search/{query}/{date}", name="search_results_by_date")
+     *
      * @return Response
      */
     public function resultsByDate(): Response
@@ -41,6 +35,7 @@ class SearchController extends AbstractController
 
     /**
      * @Route("/search/{query}/{theme}", name="search_results_by_theme")
+     *
      * @return Response
      */
     public function resultsByTheme(): Response
