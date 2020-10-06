@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class VoteComment
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -34,16 +35,26 @@ class VoteComment
      */
     private $vote;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return Comment|null
+     */
     public function getComment(): ?Comment
     {
         return $this->comment;
     }
 
+    /**
+     * @param Comment|null $comment
+     * @return $this
+     */
     public function setComment(?Comment $comment): self
     {
         $this->comment = $comment;
@@ -51,11 +62,18 @@ class VoteComment
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User|null $user
+     * @return $this
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
@@ -63,11 +81,18 @@ class VoteComment
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getVote(): ?bool
     {
         return $this->vote;
     }
 
+    /**
+     * @param bool $vote
+     * @return $this
+     */
     public function setVote(bool $vote): self
     {
         $this->vote = $vote;

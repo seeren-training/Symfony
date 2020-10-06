@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Post
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -60,22 +61,35 @@ class Post
      */
     private $comments;
 
+    /**
+     * Post constructor.
+     */
     public function __construct()
     {
         $this->votePosts = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param UserInterface|null $user
+     * @return $this
+     */
     public function setUser(?UserInterface $user): self
     {
         $this->user = $user;
@@ -83,11 +97,18 @@ class Post
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return $this
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -95,11 +116,18 @@ class Post
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string $content
+     * @return $this
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -107,11 +135,18 @@ class Post
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
     }
 
+    /**
+     * @param \DateTimeInterface $created_at
+     * @return $this
+     */
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
@@ -119,11 +154,18 @@ class Post
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getTotal(): ?int
     {
         return $this->total;
     }
 
+    /**
+     * @param int $total
+     * @return $this
+     */
     public function setTotal(int $total): self
     {
         $this->total = $total;
@@ -139,6 +181,10 @@ class Post
         return $this->votePosts;
     }
 
+    /**
+     * @param VotePost $votePost
+     * @return $this
+     */
     public function addVotePost(VotePost $votePost): self
     {
         if (!$this->votePosts->contains($votePost)) {
@@ -149,6 +195,10 @@ class Post
         return $this;
     }
 
+    /**
+     * @param VotePost $votePost
+     * @return $this
+     */
     public function removeVotePost(VotePost $votePost): self
     {
         if ($this->votePosts->contains($votePost)) {
@@ -170,6 +220,10 @@ class Post
         return $this->comments;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -180,6 +234,10 @@ class Post
         return $this;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function removeComment(Comment $comment): self
     {
         if ($this->comments->contains($comment)) {

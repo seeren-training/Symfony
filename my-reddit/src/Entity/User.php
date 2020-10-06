@@ -67,6 +67,9 @@ class User implements UserInterface
      */
     private $voteComments;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -75,16 +78,26 @@ class User implements UserInterface
         $this->voteComments = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string|null $email
+     * @return $this
+     */
     public function setEmail(?string $email): self
     {
         $this->email = $email;
@@ -110,6 +123,10 @@ class User implements UserInterface
         return array_unique($this->roles);
     }
 
+    /**
+     * @param array $roles
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -125,6 +142,10 @@ class User implements UserInterface
         return (string)$this->password;
     }
 
+    /**
+     * @param string|null $password
+     * @return $this
+     */
     public function setPassword(?string $password): self
     {
         $this->password = $password;
@@ -149,11 +170,18 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPseudo(): ?string
     {
         return $this->pseudo;
     }
 
+    /**
+     * @param string|null $pseudo
+     * @return $this
+     */
     public function setPseudo(?string $pseudo): self
     {
         $this->pseudo = $pseudo;
@@ -169,6 +197,10 @@ class User implements UserInterface
         return $this->posts;
     }
 
+    /**
+     * @param Post $post
+     * @return $this
+     */
     public function addPost(Post $post): self
     {
         if (!$this->posts->contains($post)) {
@@ -179,6 +211,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Post $post
+     * @return $this
+     */
     public function removePost(Post $post): self
     {
         if ($this->posts->contains($post)) {
@@ -200,6 +236,10 @@ class User implements UserInterface
         return $this->votePosts;
     }
 
+    /**
+     * @param VotePost $votePost
+     * @return $this
+     */
     public function addVotePost(VotePost $votePost): self
     {
         if (!$this->votePosts->contains($votePost)) {
@@ -210,6 +250,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param VotePost $votePost
+     * @return $this
+     */
     public function removeVotePost(VotePost $votePost): self
     {
         if ($this->votePosts->contains($votePost)) {
@@ -231,6 +275,10 @@ class User implements UserInterface
         return $this->comments;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -241,6 +289,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function removeComment(Comment $comment): self
     {
         if ($this->comments->contains($comment)) {
@@ -262,6 +314,10 @@ class User implements UserInterface
         return $this->voteComments;
     }
 
+    /**
+     * @param VoteComment $voteComment
+     * @return $this
+     */
     public function addVoteComment(VoteComment $voteComment): self
     {
         if (!$this->voteComments->contains($voteComment)) {
@@ -272,6 +328,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param VoteComment $voteComment
+     * @return $this
+     */
     public function removeVoteComment(VoteComment $voteComment): self
     {
         if ($this->voteComments->contains($voteComment)) {

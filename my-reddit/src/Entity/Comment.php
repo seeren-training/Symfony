@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -51,22 +52,35 @@ class Comment
      */
     private $voteComments;
 
+    /**
+     * Comment constructor.
+     */
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->voteComments = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return Post|null
+     */
     public function getPost(): ?Post
     {
         return $this->post;
     }
 
+    /**
+     * @param Post|null $post
+     * @return $this
+     */
     public function setPost(?Post $post): self
     {
         $this->post = $post;
@@ -74,11 +88,18 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User|null $user
+     * @return $this
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
@@ -86,11 +107,18 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return $this|null
+     */
     public function getComment(): ?self
     {
         return $this->comment;
     }
 
+    /**
+     * @param Comment|null $comment
+     * @return $this
+     */
     public function setComment(?self $comment): self
     {
         $this->comment = $comment;
@@ -106,6 +134,10 @@ class Comment
         return $this->comments;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function addComment(self $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -116,6 +148,10 @@ class Comment
         return $this;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function removeComment(self $comment): self
     {
         if ($this->comments->contains($comment)) {
@@ -129,11 +165,18 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string $content
+     * @return $this
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -149,6 +192,10 @@ class Comment
         return $this->voteComments;
     }
 
+    /**
+     * @param VoteComment $voteComment
+     * @return $this
+     */
     public function addVoteComment(VoteComment $voteComment): self
     {
         if (!$this->voteComments->contains($voteComment)) {
@@ -159,6 +206,10 @@ class Comment
         return $this;
     }
 
+    /**
+     * @param VoteComment $voteComment
+     * @return $this
+     */
     public function removeVoteComment(VoteComment $voteComment): self
     {
         if ($this->voteComments->contains($voteComment)) {
