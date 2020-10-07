@@ -178,7 +178,7 @@ ___
 
 ___
 
-## 🦆 Next
+## 🐧 Next
 
 > 🛑 Choose your way
 
