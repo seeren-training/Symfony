@@ -1,0 +1,8 @@
+user:
+  email: Adresse Email
+  pseudo: Identifiant
+  password: Mot de passe
+  confirm: Confirmation
+post:
+  title: Titre
+  content: Message

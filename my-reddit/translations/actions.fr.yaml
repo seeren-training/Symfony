@@ -1,0 +1,14 @@
+user:
+  new: S'enregistrer
+  new-success: Le compte a été crée
+post:
+  new: Poster
+  show_all: Voir les Posts
+comment:
+  new: Commenter
+security:
+  login: S'identifier
+  login-success: Connexion réussie
+  logout: Déconnexion
+  logout-success: Déconnexion réussie
+  remember: Se souvenir de moi
