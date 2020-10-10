@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Exception\InvalidFormException;
 use App\Form\PostType;
-use App\Repository\PostRepository;
+use App\Service\AppCore\FormValidator;
 use App\Service\PostService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,14 +19,12 @@ class PostController extends AbstractController
     /**
      * @Route("/", name="post_show_all")
      *
-     * @param PostRepository $repository
+     * @param PostService $postService
      * @return Response
      */
-    public function showAll(PostRepository $repository): Response
+    public function showAll(PostService $postService): Response
     {
-        return $this->render('post/show_all.html.twig', [
-            "posts" => $repository->findBy([], ["id" => "DESC"], 10)
-        ]);
+        return $this->render('post/show_all.html.twig', ["posts" => $postService->retrieve()]);
     }
 
     /**
@@ -37,9 +35,7 @@ class PostController extends AbstractController
      */
     public function show(Post $post): Response
     {
-        return $this->render('post/show.html.twig', [
-            "post" => $post,
-        ]);
+        return $this->render('post/show.html.twig', ["post" => $post,]);
     }
 
     /**
@@ -47,20 +43,24 @@ class PostController extends AbstractController
      * @Route("/post/new", name="post_new")
      *
      * @param Request $request
+     * @param FormValidator $formValidator
      * @param PostService $postService
      * @return Response
      */
-    public function new(Request $request, PostService $postService): Response
+    public function new(
+        Request $request,
+        FormValidator $formValidator,
+        PostService $postService
+    ): Response
     {
         $form = $this->createForm(PostType::class, new Post())->handleRequest($request);
         try {
+            $formValidator->validate($form);
             $postService->new($form, $this->getUser());
             return $this->redirectToRoute("post_show_all");
         } catch (InvalidFormException $e) {
         }
-        return $this->render('post/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render('post/new.html.twig', ['form' => $form->createView()]);
     }
 
 }

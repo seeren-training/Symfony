@@ -7,6 +7,7 @@ use App\Exception\EmailExistsException;
 use App\Exception\InvalidFormException;
 use App\Exception\PseudoExistsException;
 use App\Form\UserType;
+use App\Service\AppCore\FormValidator;
 use App\Service\UserService;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -15,7 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserController extends AbstractController
 {
@@ -25,7 +28,10 @@ class UserController extends AbstractController
      * @Route("/user/new", name="user_new")
      *
      * @param Request $request
-     * @param UserService $service
+     * @param FormValidator $formValidator
+     * @param UserService $userService
+     * @param Session $session
+     * @param TranslatorInterface $translator
      * @return Response
      *
      * @throws ORMException
@@ -33,17 +39,22 @@ class UserController extends AbstractController
      */
     public function new(
         Request $request,
-        UserService $service
+        FormValidator $formValidator,
+        UserService $userService,
+        Session $session,
+        TranslatorInterface $translator
     ): Response
     {
         $form = $this->createForm(UserType::class, new User())->handleRequest($request);
         try {
-            $service->new($form);
+            $formValidator->validate($form);
+            $userService->new($form);
+            $session->getFlashBag()->add("success", $translator->trans("user.new-success", [], "actions"));
             return $this->redirectToRoute("post_show_all");
         } catch (EmailExistsException $e) {
-            $form->get("email")->addError(new FormError("Email already exists"));
+            $form->get("email")->addError(new FormError($translator->trans("user.email", [], "validators")));
         } catch (PseudoExistsException $e) {
-            $form->get("pseudo")->addError(new FormError("Pseudo already exists"));
+            $form->get("pseudo")->addError(new FormError($translator->trans("user.pseudo", [], "validators")));
         } catch (InvalidFormException $e) {
         }
         return $this->render('user/new.html.twig', [

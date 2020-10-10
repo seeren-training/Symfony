@@ -23,7 +23,7 @@ class Post
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $user;
 

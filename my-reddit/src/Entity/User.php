@@ -48,11 +48,6 @@ class User implements UserInterface
     private $pseudo;
 
     /**
-     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user")
-     */
-    private $posts;
-
-    /**
      * @ORM\OneToMany(targetEntity=VotePost::class, mappedBy="user")
      */
     private $votePosts;
@@ -72,7 +67,6 @@ class User implements UserInterface
      */
     public function __construct()
     {
-        $this->posts = new ArrayCollection();
         $this->votePosts = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->voteComments = new ArrayCollection();
@@ -185,45 +179,6 @@ class User implements UserInterface
     public function setPseudo(?string $pseudo): self
     {
         $this->pseudo = $pseudo;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Post[]
-     */
-    public function getPosts(): Collection
-    {
-        return $this->posts;
-    }
-
-    /**
-     * @param Post $post
-     * @return $this
-     */
-    public function addPost(Post $post): self
-    {
-        if (!$this->posts->contains($post)) {
-            $this->posts[] = $post;
-            $post->setUser($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Post $post
-     * @return $this
-     */
-    public function removePost(Post $post): self
-    {
-        if ($this->posts->contains($post)) {
-            $this->posts->removeElement($post);
-            // set the owning side to null (unless already changed)
-            if ($post->getUser() === $this) {
-                $post->setUser(null);
-            }
-        }
 
         return $this;
     }

@@ -19,7 +19,7 @@ class VotePost
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=post::class, inversedBy="votePosts")
+     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="votePosts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $post;
