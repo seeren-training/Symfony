@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Post;
-use App\Exception\InvalidFormException;
+use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -17,25 +17,30 @@ class PostService
     private EntityManagerInterface $entityManager;
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * @var PostRepository
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    private PostRepository $repository;
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param PostRepository $repository
+     */
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        PostRepository $repository
+    )
     {
         $this->entityManager = $entityManager;
+        $this->repository = $repository;
     }
 
     /**
      * @param FormInterface $form
      * @param UserInterface $user
      * @return Post
-     *
-     * @throws InvalidFormException
      */
     public function new(FormInterface $form, UserInterface $user): Post
     {
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            throw new InvalidFormException();
-        }
         $post = $form->getData();
         $post->setUser($user);
         $post->setTotal(0);
@@ -43,6 +48,11 @@ class PostService
         $this->entityManager->persist($post);
         $this->entityManager->flush();
         return $post;
+    }
+
+    public function retrieve(): array
+    {
+        return $this->repository->findBy([], ["id" => "DESC"], 10);
     }
 
 }

@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use App\Exception\EmailExistsException;
-use App\Exception\InvalidFormException;
 use App\Exception\PseudoExistsException;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -44,18 +43,14 @@ class UserService
      * @return UserInterface
      *
      * @throws EmailExistsException
-     * @throws InvalidFormException
      * @throws PseudoExistsException
      * @throws OptimisticLockException
      * @throws ORMException
      */
     public function new(FormInterface $form): UserInterface
     {
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            throw new InvalidFormException();
-        }
-        $user = $form->getData();
         try {
+            $user = $form->getData();
             $encodedPassword = $this->encoder->encodePassword($user, $user->getPassword());
             $this->repository->upgradePassword($user, $encodedPassword);
         } catch (UniqueConstraintViolationException $e) {
