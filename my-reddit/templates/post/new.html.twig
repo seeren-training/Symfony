@@ -10,26 +10,30 @@
             class: 'my-5'
         }}) }}
 
-        <h1 class="is-size-2 my-5">New Post</h1>
+        <h1 class="is-size-2 my-5">
+            {{ 'post.new'|trans({}, 'titles') }}
+        </h1>
 
         {% if form.vars.errors|length %}
-            {% include '_shared/alert.html.twig' with { error: form_errors(form)} %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form), level: 'danger' } %}
         {% endif %}
 
-        {{ form_label(form.title, "", { label_attr: { class: 'label' }}) }}
+        {{ form_label(form.title, "post.title", { label_attr: { class: 'label' }}) }}
         {% if form.title.vars.valid == false %}
-            {% include '_shared/alert.html.twig' with { error: form_errors(form.title)} %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form.title), level: 'danger'} %}
         {% endif %}
         {{ form_widget(form.title, { attr: { class: 'input', autofocus: 'autofocus' }}) }}
 
-        {{ form_label(form.content, "", { label_attr: { class: 'label' }}) }}
+        {{ form_label(form.content, "post.content", { label_attr: { class: 'label' }}) }}
         {% if not form.content.vars.valid %}
-            {% include '_shared/alert.html.twig' with { error: form_errors(form.content)} %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form.content), level: 'danger'} %}
         {% endif %}
         {{ form_widget(form.content, { attr: { class: 'input' }}) }}
 
         <div class="control my-4">
-            <button class="button is-primary" type="submit">Create</button>
+            <button class="button is-primary" type="submit">
+                {{ 'post.new'|trans({}, 'actions') }}
+            </button>
         </div>
 
         {{ form_end(form) }}

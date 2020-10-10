@@ -18,22 +18,28 @@
                     {% if is_granted("ROLE_USER") %}
                         {% if 'post_new' == app.request.get('_route') %}
                             <a class="button is-primary" href="{{ path('post_show_all') }}">
-                                <strong>Post list</strong>
+                                <strong>
+                                    {{ 'post.show_all'|trans({}, 'actions') }}
+                                </strong>
                             </a>
                         {% else %}
                             <a class="button is-primary" href="{{ path('post_new') }}">
-                                <strong>New Post</strong>
+                                <strong>
+                                    {{ 'post.new'|trans({}, 'actions') }}
+                                </strong>
                             </a>
                         {% endif %}
                         <a class="button is-light" href="{{ path('security_logout') }}">
-                            Logout
+                            {{ 'security.logout'|trans({}, 'actions') }}
                         </a>
                     {% else %}
                         <a class="button is-primary" href="{{ path('user_new') }}">
-                            <strong>Sign up</strong>
+                            <strong>
+                                {{ 'user.new'|trans({}, 'actions') }}
+                            </strong>
                         </a>
                         <a class="button is-light" href="{{ path('security_login') }}">
-                            Log in
+                            {{ 'security.login'|trans({}, 'actions') }}
                         </a>
                     {% endif %}
                 </div>

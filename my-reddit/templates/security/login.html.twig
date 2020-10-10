@@ -5,38 +5,35 @@
 {% block body %}
     <main class="container">
         <form class="my-5" method="post" novalidate>
-            <h1 class="is-size-2 my-5">Login</h1>
-            <label class="label" for="inputEmail">Email</label>
+            <h1 class="is-size-2 my-5">
+                {{ 'security.login'|trans({}, 'titles') }}
+            </h1>
+            <label class="label" for="inputEmail">
+                {{ 'user.email'|trans({}, 'messages') }}
+            </label>
             {% if error %}
-                <div class="notification is-danger is-light">
-                    <a class="delete"></a>
-                    {{ error.messageKey|trans(error.messageData, 'security') }}
-                </div>
+                {% include '_shared/alert.html.twig' with { error: error.messageKey|trans({},'security'), level: 'danger' } %}
             {% endif %}
             <div class="control">
-                <input class="input" type="email" value="{{ last_username }}" name="email" id="inputEmail"
-                       required
+                <input class="input" type="email" value="{{ last_username }}" name="email" id="inputEmail" required
                        autofocus>
             </div>
-            <label class="label" for="inputPassword">Password</label>
+            <label class="label" for="inputPassword">
+                {{ 'user.password'|trans({}, 'messages') }}
+            </label>
             <div class="control">
                 <input class="input" type="password" name="password" id="inputPassword" class="form-control" required>
             </div>
-
-
-
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
             <div class="my-3">
                 <label class="checkbox">
                     <input type="checkbox" name="_remember_me">
-                    Remember me
+                    {{ 'security.remember'|trans({}, 'actions') }}
                 </label>
             </div>
-
             <div class="control my-4">
                 <button class="button is-primary" type="submit">
-                    Log in
+                    {{ 'security.login'|trans({}, 'actions') }}
                 </button>
             </div>
         </form>

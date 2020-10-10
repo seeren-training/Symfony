@@ -1,9 +1,11 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Comment List{{ parent() }}{% endblock %}
-
-{% block body %}
-
-    <h1>Comment List</h1>
-
-{% endblock %}
+{% for comment in comments %}
+    <ul>
+        <hr>
+        <li class="block">
+            <strong>{{ comment.user.pseudo }}</strong>:
+            <br>
+            <br>
+            <blockquote class="notification">{{ comment.content }}</blockquote>
+        </li>
+    </ul>
+{% endfor %}

@@ -10,34 +10,38 @@
             class: 'my-5'
         }}) }}
 
-        <h1 class="is-size-2 my-5">Signup</h1>
+        <h1 class="is-size-2 my-5">
+            {{ 'user.new'|trans({}, 'titles') }}
+        </h1>
 
         {% if form.vars.errors|length %}
-            {% include '_shared/alert.html.twig' with { error: form_errors(form)} %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form), level: 'danger' } %}
         {% endif %}
 
-        {{ form_label(form.email, "", { label_attr: { class: 'label' }}) }}
+        {{ form_label(form.email, "user.email", { label_attr: { class: 'label' }}) }}
         {% if not form.email.vars.valid %}
-            {% include '_shared/alert.html.twig' with { error: form_errors(form.email)} %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form.email), level: 'danger' } %}
         {% endif %}
         {{ form_widget(form.email, { attr: { class: 'input' }}) }}
 
-        {{ form_label(form.pseudo, "", { label_attr: { class: 'label' }}) }}
+        {{ form_label(form.pseudo, "user.pseudo", { label_attr: { class: 'label' }}) }}
         {% if form.pseudo.vars.valid == false %}
-            {% include '_shared/alert.html.twig' with { error: form_errors(form.pseudo)} %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form.pseudo), level: 'danger' } %}
         {% endif %}
         {{ form_widget(form.pseudo, { attr: { class: 'input', autofocus: 'autofocus' }}) }}
 
-        {{ form_label(form.password.first, "Password", { label_attr: { class: 'label' }}) }}
+        {{ form_label(form.password.first, "user.password", { label_attr: { class: 'label' }}) }}
         {% if not form.password.vars.valid %}
-            {% include '_shared/alert.html.twig' with { error: form_errors(form.password.first)} %}
+            {% include '_shared/alert.html.twig' with { error: form_errors(form.password.first), level: 'danger' } %}
         {% endif %}
         {{ form_widget(form.password.first, { attr: { class: 'input' }}) }}
-        {{ form_label(form.password.second, "Confirm", { label_attr: { class: 'label' }}) }}
+        {{ form_label(form.password.second, "user.confirm", { label_attr: { class: 'label' }}) }}
         {{ form_widget(form.password.second, { attr: { class: 'input' }}) }}
 
         <div class="control my-4">
-            <button class="button is-primary" type="submit">Sign up</button>
+            <button class="button is-primary" type="submit">
+                {{ 'user.new'|trans({}, 'actions') }}
+            </button>
         </div>
 
         {{ form_end(form) }}

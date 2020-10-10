@@ -1,9 +1,22 @@
-{% extends 'base.html.twig' %}
+{{ form_start(form, { attr: {
+    novalidate: 'novalidate',
+    class: 'my-5'
+}}) }}
 
-{% block title %}New Comment{{ parent() }}{% endblock %}
+{% if form.vars.errors|length %}
+    {% include '_shared/alert.html.twig' with { error: form_errors(form), level: 'danger' } %}
+{% endif %}
 
-{% block body %}
+{{ form_label(form.content, "post.content", { label_attr: { class: 'label' }}) }}
+{% if not form.content.vars.valid %}
+    {% include '_shared/alert.html.twig' with { error: form_errors(form.content), level: 'danger' } %}
+{% endif %}
+{{ form_widget(form.content, { attr: { class: 'input' }}) }}
 
-    <h1>New Comment</h1>
+<div class="control my-4">
+    <button class="button is-primary" type="submit">
+        {{ 'comment.new'|trans({}, 'actions') }}
+    </button>
+</div>
 
-{% endblock %}
+{{ form_end(form) }}

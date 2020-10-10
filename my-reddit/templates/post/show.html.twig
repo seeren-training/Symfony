@@ -3,43 +3,63 @@
 {% block title %}Post {{ parent() }}{% endblock %}
 
 {% block body %}
-    <main class="container">
-        <h1 class="is-size-2 my-5">Post # {{ post.id }}</h1>
-        <br/>
-        <div class="container is-max-widescreen box">
-            <div class="level">
+    <main class="container post">
+        <br>
+        <br>
+        <article class="message container is-max-widescreen box">
+
+            <div class="level message-header">
                 <div class="level-left">
-                    <div class="level-item">
-                        {{ post.user.pseudo }}
+                    <div class="has-text-centered mr-4">
+                        <a class="material-icons" href="{{ path("post_vote_up",  {
+                            id: post.id,
+                            csrf_token: csrf_token('post_vote_up')
+                        }) }}">expand_less</a>
+                        <br>
+                        <span>{{ post.total }}</span>
+                        <br>
+                        <a class="material-icons" href="{{ path("post_vote_down",  {
+                            id: post.id,
+                            csrf_token: csrf_token('post_vote_down')
+                        }) }}">expand_more</a>
                     </div>
+                    {{ post.user.pseudo }}
                 </div>
                 <div class="level-right">
-                    <div class="level-item">
-                        {{ post.createdAt|date }}
-                    </div>
+                    {{ post.createdAt|date }}
                 </div>
             </div>
-            <div class="notification is-white">
-                <nav class="level is-mobile">
-                    <div class="level-item has-text-left">
-                        <div>
-                            <p class="heading">Votes</p>
-                            <p class="title">{{ post.total }}</p>
-                        </div>
-                    </div>
-                    <div class="level-item has-text-centered">
-                        <div>
-                            <p class="heading">Title</p>
-                            <p class="title">
-                                <a href="{{ path('post_show', { id: post.id }) }}">
-                                    {{ post.title }}
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </nav>
+
+            <div class="notification is-white message-body">
+                <h2 class="title">
+                    <a href="{{ path('post_show', { id: post.id }) }}">
+                        {{ post.title }}
+                    </a>
+                </h2>
+                <hr>
                 <p>{{ post.content }}</p>
+                <br>
+                <hr>
+                {% if is_granted('ROLE_USER') %}
+                    {{ render(controller("App\\Controller\\Post\\CommentController::new", {
+                        post: post,
+                        request: app.request,
+                        user: app.user
+                    })) }}
+                {% endif %}
+                {{ render(controller("App\\Controller\\Post\\CommentController::showAll", { post: post })) }}
             </div>
-        </div>
+
+        </article>
+
+        <br/>
+        <a class="button is-primary" href="{{ path('post_show_all') }}">
+            <strong>
+                {{ 'post.show_all'|trans({}, 'actions') }}
+            </strong>
+        </a>
+        <br/>
+        <br/>
+        <br/>
     </main>
 {% endblock %}
