@@ -1,5 +1,6 @@
-import '../css/app.css';
 import 'bulma/css/bulma.css';
+import 'material-design-icons/iconfont/material-icons.css';
+import '../css/app.css';
 
 document.addEventListener('DOMContentLoaded', () => {
 

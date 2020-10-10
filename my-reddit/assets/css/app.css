@@ -13,9 +13,24 @@ footer {
     padding: 3rem 1.5rem 3rem !important;
 }
 
-.notification  {
+a {
+    text-decoration: none !important;
+}
+
+.notification {
     margin-bottom: 1rem !important;
     padding: .75rem 2.5rem .75rem 1.5rem !important;
 }
 
+.post .box {
+    padding: 0;
+    min-width: 60vw;
+}
 
+.post .message-header {
+    margin-bottom: 0;
+}
+
+.post .level-left, .post .level-right {
+    margin-top: 0;
+}
