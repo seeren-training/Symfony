@@ -127,7 +127,7 @@ private $name;
 bin/console make:controller Product
 ```
 
-### Creation
+### **Create**
 
 * Route
 
@@ -195,7 +195,7 @@ Because `$this->json` used with the `SerializerInterface` do not handle option U
     }
 ```
 
-### Retrieve
+### **Retrieve**
 
 * Route
 
