@@ -53,6 +53,8 @@ class PostController extends AbstractController
         PostService $postService
     ): Response
     {
+        $request->request->add(["foo" => "hello"]);
+        dump($request->request);
         $form = $this->createForm(PostType::class, new Post())->handleRequest($request);
         try {
             $formValidator->validate($form);
