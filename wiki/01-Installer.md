@@ -113,7 +113,7 @@ Pour installer un package il faut utiliser composer. Depuis la version 4, Symfon
 
 ### 🏷️ **Installation**
 
-Pour installer un package qui vérifie nos pre requis nous pouvons utiliser cette commande que nous trouvons sur la [documentation](https://symfony.com/doc/4.2/reference/requirements.html).
+Pour installer un package qui vérifie nos pre requis si vous n'avez pas installer le bainary symfony nous pouvons utiliser cette commande que nous trouvons sur la [documentation](https://symfony.com/doc/4.2/reference/requirements.html).
 
 ```bash
 composer require symfony/requirements-checker
@@ -131,7 +131,7 @@ Suite à son installation nous sommes informé d'action supplémentaires.
 Pour exécuter ce package qui donne des informations supplémentaires, vous pouvez exécuter son CLI.
 
 ```bash
-vendor/symfony/requirements-checker/bin/requirements-checker
+vendor/bin/requirements-checker
 ```
 
 ___
