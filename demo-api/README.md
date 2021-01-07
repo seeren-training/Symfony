@@ -6,7 +6,7 @@ ___
 
 ## Installation
 
-Make a project but not full, you do no need tempalte rendering, we will install package needed one by one.
+Make a project but not full, you do no need template rendering, we will install package needed one by one.
 
 * *Install skeleton*
 
@@ -20,10 +20,28 @@ symfony new demo-api
 composer require --dev symfony/maker-bundle
 ```
 
-* *Install doctrine*
+* *Install security*
 
 ```bash
-composer require symfony/orm-pack
+composer require security
+```
+
+* *Install orm*
+
+```bash
+composer require orm
+```
+
+* *Install form*
+
+```bash
+composer require form
+```
+
+* *Install validator*
+
+```bash
+composer require validator
 ```
 
 * *Install annotations*
@@ -32,32 +50,20 @@ composer require symfony/orm-pack
 composer require doctrine/annotations
 ```
 
-* *Install form*
-
-```bash
-composer require symfony/form
-```
-
-* *Install validator*
-
-```bash
-composer require symfony/validator
-```
-
 * *Install serializer*
 
 ```bash
 composer require symfony/serializer
 ```
 
-To make HTTP Request Postman is a great tool to use
+* *Framework extra bundle*
 
-* *Install postman*
+```bash
+composer require sensio/framework-extra-bundle
 
-[@link https://www.postman.com/downloads/](https://www.postman.com/downloads/)
+```
 
 ___
-
 
 ## Configuration
 
@@ -67,172 +73,223 @@ ___
 DATABASE_URL=mysql://root@localhost:3306/demo_api?serverVersion=mariadb-10.4.13
 ```
 
-___
-
-
-## Database
-
-Manipulation subject is an endpoint for a `Product`.
-
-* *Make entity*
-
-```bash
-bin/console make:entity
-```
-
-```bash
-MariaDB [demo_api]> describe product;
-+-------------+--------------+------+-----+---------+----------------+
-| Field       | Type         | Null | Key | Default | Extra          |
-+-------------+--------------+------+-----+---------+----------------+
-| id          | int(11)      | NO   | PRI | NULL    | auto_increment |
-| name        | varchar(255) | NO   |     | NULL    |                |
-| description | longtext     | NO   |     | NULL    |                |
-+-------------+--------------+------+-----+---------+----------------+
-```
 * *Create the database*
 
 ```bash
-bin/console doctrine:database:create
+bin/console d:d:c
 ```
-* *Prepare a migration*
+
+### Security
+
+* *Create the user*
+
+```bash
+bin/console make:user
+```
+
+* *Add a token*
+
+```text
+/**
+ * @ORM\Column(type="string", unique=true, nullable=true)
+ */
+private $token;
+```
+
+* *Create the form and edit*
+
+```bash
+bin/console make:form
+```
+
+* *Add validation constraints*
+
+```text
+/**
+ * @Assert\NotBlank
+ * @Assert\Email
+ * @ORM\Column(type="string", length=180, unique=true)
+ */
+private $email;
+```
+
+* *Add serialization groups*
+
+```text
+/**
+ * @Assert\NotBlank
+ * @Assert\Email
+ * @ORM\Column(type="string", length=180, unique=true)
+ * @Groups({"public"})
+ */
+private $email;
+```
+
+* *Create the Authenticator*
+
+```bash
+bin/console make:auth
+```
+
+* *Edit security.html*
+
+```yaml
+providers:
+  # used to reload user from session & other features (e.g. switch_user)
+  app_user_provider:
+    entity:
+      class: App\Entity\User
+      property: token
+firewalls:
+  dev:
+    pattern: ^/(_(profiler|wdt)|css|images|js)/
+    security: false
+  main:
+    anonymous: true
+    lazy: true
+    provider: app_user_provider
+    logout: ~
+    guard:
+      authenticators:
+        - App\Security\UserAuthenticator
+```
+
+* *Generate Migration*
 
 ```bash
 bin/console make:migration
 ```
 
-* *Execute migrations*
+* *Execute Migrations*
 
 ```bash
-bin/console doctrine:migrations:migrate
+bin/console d:m:m
 ```
 
-* *Constraints*
+* *Disable CSRF in framework.yml*
 
-Add some constraints to use validation
+```yml
+csrf_protection: false
+```
+
+* *Clear the cache*
+
+```yml
+symfony cache:clear
+```
+___
+
+## Usage
+
+### SecurityController
+
+#### register
+
+Simple user registration with a Basic token using form validation
 
 ```php
-/**
- * @Assert\NotBlank
- * @ORM\Column(type="string", length=255)
- */
-private $name;
-```
-
-## Controller
-
-* *Create controller*
-
-```bash
-bin/console make:controller Product
-```
-
-### **Create**
-
-* Route
-
-```php
-@Route("/products", name="products", methods={"POST"})
-```
-
-* Request
-
-The client makes a request in POST in JSON with explicite content type
-
-*Request method*
-
-```bash
-POST
-```
-
-*Request header*
-
-```bash
-Content-Type: application/json
-```
-
-*Request body*
-
-```json
+public function register(
+    Request $request,
+    UserPasswordEncoderInterface $encoder,
+    UserRepository $repository): Response
 {
-    "name": "Product A",
-    "description": "Product A Description"
-}
-```
-
-* Action
-
-We need to handle client JSON and set our request POST parameters to use form validation.
-Because `$this->json` used with the `SerializerInterface` do not handle option UNESCAPE_UNICODE for this example we will use `JsonResponse`.
-
-```php
-    /**
-     * @Route("/products", name="products_new", methods={"POST"})
-     *
-     * @param Request $request
-     * @param SerializerInterface $serializer
-     * @return JsonResponse
-     */
-    public function new(
-        Request $request,
-        SerializerInterface $serializer
-    ): JsonResponse
-    {
-        $entity = new Product();
-        $response = new JsonResponse();
-        $request->request->add(['product' => json_decode($request->getContent(), true)]);
-        $form = $this->createForm(ProductType::class, $entity)->handleRequest($request);
+    $user = new User();
+    $request->request->add(['user' => json_decode($request->getContent(), true)]);
+    try {
+        $form = $this->createForm(UserType::class, $user)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-            return $response
-                ->setStatusCode(Response::HTTP_CREATED)
-                ->setContent($serializer->serialize($entity, "json"));
+            $basicToken = base64_encode($user->getUsername() . ':' . $user->getPassword());
+            $user->setToken($basicToken);
+            $repository->upgradePassword($user, $encoder->encodePassword($user, $user->getPassword()));
+            return $this->json($user, Response::HTTP_CREATED, [], ['groups' => ['public', 'private']]);
         }
-        return $response
-            ->setStatusCode(Response::HTTP_BAD_REQUEST);
+        throw new InvalidArgumentException();
+    } catch (UniqueConstraintViolationException $e) {
+        return $this->json(['error' => 'Conflict'], Response::HTTP_CONFLICT);
+    } catch (NotNullConstraintViolationException | InvalidArgumentException $e) {
+        return $this->json(['error' => 'Bad Request'], Response::HTTP_BAD_REQUEST);
     }
+}
 ```
 
-### **Retrieve**
+#### login
 
-* Route
+Simple user login using form validation
 
 ```php
-@Route("/products", name="products_index", methods={"GET"})
+public function login(
+    Request $request,
+    UserPasswordEncoderInterface $encoder,
+    UserRepository $repository): Response
+{
+    $user = new User();
+    $request->request->add(['user' => json_decode($request->getContent(), true)]);
+    try {
+        $form = $this->createForm(UserType::class, $user)->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rawPassword = $user->getPassword();
+            $user = $repository->findOneBy(["email" => $user->getEmail()]);
+            if (!$user || !$encoder->isPasswordValid($user, $rawPassword)) {
+                throw new RuntimeException();
+            }
+            return $this->json($user, Response::HTTP_OK, [], ['groups' => ['public', 'private']]);
+        }
+        throw new InvalidArgumentException();
+    } catch (RuntimeException $e) {
+        return $this->json(['error' => 'Not Found'], Response::HTTP_NOT_FOUND);
+    } catch (InvalidArgumentException $e) {
+        return $this->json(['error' => 'Bad Request'], Response::HTTP_BAD_REQUEST);
+    }
+}
 ```
 
-* Action
+### GrantedController
+
+Users can be authenticated using roles
 
 ```php
 /**
- * @Route("/products", name="products_index", methods={"GET"})
+ * @IsGranted("ROLE_USER")
+ * @Route("/users", methods={"GET"})
  *
- * @param SerializerInterface $serializer
- * @param ProductRepository $repository
- * @return JsonResponse
+ * @param UserRepository $repository
+ * @return Response
  */
-public function index(
-    SerializerInterface $serializer,
-    ProductRepository $repository
-): JsonResponse
+public function index(UserRepository $repository): Response
 {
-    return (new JsonResponse())
-        ->setStatusCode(200)
-        ->setContent($serializer->serialize($repository->findAll(), 'json'));
+    return $this->json($repository->findAll(), Response::HTTP_OK, [], ['groups' => 'public']);
 }
 ```
+
+___
+
+## CORS
+
+From a different host you won't be able to request your api.
+We need to allow origin, headers and methods at least and on each request
+
+
+* *Create subscriber* for kernel response
+
+```php
+bin/console make:subscriber
+```
+
+Add Cors origin, headers and methods
+
+```php
+public function onKernelResponse(ResponseEvent $event)
+{
+    $event->getResponse()->headers->add([
+        "Access-Control-Allow-Origin" => "*",
+        "Access-Control-Allow-Headers" => "Content-Type, X-AUTH-TOKEN",
+        "Access-Control-Allow-Methods" => "GET,POST,PUT,DELETE",
+    ]);
+}
+```
+
+___
 
 ## Conclusion
 
-Creating an API suppose you have a solid front-end framework to use it.
- Before that i suggest you to interesse you on the folowwing points on Symfony Framework:
-
-* CRUD
-* Groups
-* REST HTTP response
-* Services usage
-* Fixtures
-* Authorization
-* Events
+Build your api and consum it!
