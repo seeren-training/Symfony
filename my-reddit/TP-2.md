@@ -139,15 +139,6 @@ PostController can embeed CommentController to do not be responsible to manage C
 
 A controller can embed and render controller using twig.
 
-```twig
-<div id="sidebar">
-    {{ render(controller(
-        'App\\Controller\\ArticleController::recentArticles',
-        { 'max': 3 }
-    )) }}
-</div>
-```
-
 [@see https://symfony.com/doc/4.1/templating/embedding_controllers.html](https://symfony.com/doc/4.1/templating/embedding_controllers.html)
 
 ### **Pass Request and others**
