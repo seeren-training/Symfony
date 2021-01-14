@@ -4,11 +4,9 @@
 
 56 heures
 
-___
+## Public concerné
 
-## Prérequis
-
-Avoir participé au module PHP-Object
+Développeurs PHP.
 
 ___
 
