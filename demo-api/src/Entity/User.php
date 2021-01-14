@@ -20,7 +20,7 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      * @Groups({"public"})
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @Assert\NotBlank
@@ -28,24 +28,24 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"public"})
      */
-    private $email;
+    private ?string $email;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @Assert\NotBlank
      * @ORM\Column(type="string")
      */
-    private $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string", unique=true, nullable=true)
      * @Groups({"private"})
      */
-    private $token;
+    private ?string $token;
 
     /**
      * @return int|null
@@ -119,7 +119,7 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
     }
 

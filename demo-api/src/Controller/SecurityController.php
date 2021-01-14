@@ -21,16 +21,7 @@ class SecurityController extends AbstractController
 {
 
     /**
-     * @Route("/users", methods={"OPTIONS"})
-     * @return Response
-     */
-    public function registerOptions(): Response
-    {
-        return $this->json([]);
-    }
-
-    /**
-     * @Route("/users", methods={"POST"})
+     * @Route("/register", methods={"POST"})
      *
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
@@ -49,26 +40,17 @@ class SecurityController extends AbstractController
         try {
             $form = $this->createForm(UserType::class, $user)->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $basicToken = base64_encode($user->getUsername() . ':' . $user->getPassword());
-                $user->setToken($basicToken);
-                $repository->upgradePassword($user, $encoder->encodePassword($user, $user->getPassword()));
+                $passwordHash = $encoder->encodePassword($user, $user->getPassword());
+                $user->setToken(base64_encode($user->getUsername() . ':' . $passwordHash));
+                $repository->upgradePassword($user, $passwordHash);
                 return $this->json($user, Response::HTTP_CREATED, [], ['groups' => ['public', 'private']]);
             }
             throw new InvalidArgumentException();
         } catch (UniqueConstraintViolationException $e) {
-            return $this->json(['error' => 'Conflict'], Response::HTTP_CONFLICT);
+            return $this->json(['error' => 'Conflict'], Response::HTTP_CONFLICT, [], ['groups' => 'public']);
         } catch (NotNullConstraintViolationException | InvalidArgumentException $e) {
-            return $this->json(['error' => 'Bad Request'], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'Bad Request'], Response::HTTP_BAD_REQUEST, [], ['groups' => 'public']);
         }
-    }
-
-    /**
-     * @Route("/login", methods={"OPTIONS"})
-     * @return Response
-     */
-    public function loginOptions(): Response
-    {
-        return $this->json([]);
     }
 
     /**
@@ -89,18 +71,18 @@ class SecurityController extends AbstractController
         try {
             $form = $this->createForm(UserType::class, $user)->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $rawPassword = $user->getPassword();
+                $password = $user->getPassword();
                 $user = $repository->findOneBy(["email" => $user->getEmail()]);
-                if (!$user || !$encoder->isPasswordValid($user, $rawPassword)) {
-                    throw new RuntimeException();
+                if ($user && $encoder->isPasswordValid($user, $password)) {
+                    return $this->json($user, Response::HTTP_OK, [], ['groups' => ['public', 'private']]);
                 }
-                return $this->json($user, Response::HTTP_OK, [], ['groups' => ['public', 'private']]);
+                throw new RuntimeException();
             }
             throw new InvalidArgumentException();
         } catch (RuntimeException $e) {
-            return $this->json(['error' => 'Not Found'], Response::HTTP_NOT_FOUND);
+            return $this->json(['error' => 'Not Found'], Response::HTTP_NOT_FOUND, [], ['groups' => 'public']);
         } catch (InvalidArgumentException $e) {
-            return $this->json(['error' => 'Bad Request'], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'Bad Request'], Response::HTTP_BAD_REQUEST, [], ['groups' => 'public']);
         }
     }
 

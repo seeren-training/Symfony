@@ -177,6 +177,108 @@ csrf_protection: false
 ```yml
 symfony cache:clear
 ```
+
+### CORS
+
+From a different host you won't be able to request your api.
+We need to allow origin, headers and methods at least and on each request.
+
+
+* *Store CORS headers in services.yaml*
+
+```yml
+services:
+        bind:
+            $cors:
+                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Headers': 'Content-Type, X-AUTH-TOKEN'
+                'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE'
+```
+
+* *Create subscriber* for kernel request and response
+
+```php
+bin/console make:subscriber
+```
+
+* *Request subscriber* to handle option method
+
+```php
+<?php
+
+namespace App\EventSubscriber;
+
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+
+class CorsRequestSubscriber implements EventSubscriberInterface
+{
+
+    private array $cors;
+
+    public function __construct(array $cors)
+    {
+        $this->cors = $cors;
+    }
+
+    public function onKernelRequest(RequestEvent $event)
+    {
+        if ('OPTIONS' === $_SERVER['REQUEST_METHOD']) {
+            $response = new Response();
+            $response->headers->add($this->cors);
+            $response->send();
+            $event->getKernel()->terminate($event->getRequest(), $response);
+            exit();
+        }
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'kernel.request' => 'onKernelRequest',
+        ];
+    }
+
+}
+```
+
+
+* *Response subscriber* to handle headers
+
+```php
+<?php
+
+namespace App\EventSubscriber;
+
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
+
+class CorsResponseSubscriber implements EventSubscriberInterface
+{
+
+    private array $cors;
+
+    public function __construct(array $cors)
+    {
+        $this->cors = $cors;
+    }
+
+    public function onKernelResponse(ResponseEvent $event)
+    {
+        $event->getResponse()->headers->add($this->cors);
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'kernel.response' => 'onKernelResponse',
+        ];
+    }
+
+}
+```
+
 ___
 
 ## Usage
@@ -198,16 +300,16 @@ public function register(
     try {
         $form = $this->createForm(UserType::class, $user)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $basicToken = base64_encode($user->getUsername() . ':' . $user->getPassword());
-            $user->setToken($basicToken);
-            $repository->upgradePassword($user, $encoder->encodePassword($user, $user->getPassword()));
+            $passwordHash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setToken(base64_encode($user->getUsername() . ':' . $passwordHash));
+            $repository->upgradePassword($user, $passwordHash);
             return $this->json($user, Response::HTTP_CREATED, [], ['groups' => ['public', 'private']]);
         }
         throw new InvalidArgumentException();
     } catch (UniqueConstraintViolationException $e) {
-        return $this->json(['error' => 'Conflict'], Response::HTTP_CONFLICT);
+        return $this->json(['error' => 'Conflict'], Response::HTTP_CONFLICT, [], ['groups' => 'public']);
     } catch (NotNullConstraintViolationException | InvalidArgumentException $e) {
-        return $this->json(['error' => 'Bad Request'], Response::HTTP_BAD_REQUEST);
+        return $this->json(['error' => 'Bad Request'], Response::HTTP_BAD_REQUEST, [], ['groups' => 'public']);
     }
 }
 ```
@@ -227,18 +329,18 @@ public function login(
     try {
         $form = $this->createForm(UserType::class, $user)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $rawPassword = $user->getPassword();
+            $password = $user->getPassword();
             $user = $repository->findOneBy(["email" => $user->getEmail()]);
-            if (!$user || !$encoder->isPasswordValid($user, $rawPassword)) {
-                throw new RuntimeException();
+            if ($user && $encoder->isPasswordValid($user, $password)) {
+                return $this->json($user, Response::HTTP_OK, [], ['groups' => ['public', 'private']]);
             }
-            return $this->json($user, Response::HTTP_OK, [], ['groups' => ['public', 'private']]);
+            throw new RuntimeException();
         }
         throw new InvalidArgumentException();
     } catch (RuntimeException $e) {
-        return $this->json(['error' => 'Not Found'], Response::HTTP_NOT_FOUND);
+        return $this->json(['error' => 'Not Found'], Response::HTTP_NOT_FOUND, [], ['groups' => 'public']);
     } catch (InvalidArgumentException $e) {
-        return $this->json(['error' => 'Bad Request'], Response::HTTP_BAD_REQUEST);
+        return $this->json(['error' => 'Bad Request'], Response::HTTP_BAD_REQUEST, [], ['groups' => 'public']);
     }
 }
 ```
@@ -262,34 +364,3 @@ public function index(UserRepository $repository): Response
 ```
 
 ___
-
-## CORS
-
-From a different host you won't be able to request your api.
-We need to allow origin, headers and methods at least and on each request
-
-
-* *Create subscriber* for kernel response
-
-```php
-bin/console make:subscriber
-```
-
-Add Cors origin, headers and methods
-
-```php
-public function onKernelResponse(ResponseEvent $event)
-{
-    $event->getResponse()->headers->add([
-        "Access-Control-Allow-Origin" => "*",
-        "Access-Control-Allow-Headers" => "Content-Type, X-AUTH-TOKEN",
-        "Access-Control-Allow-Methods" => "GET,POST,PUT,DELETE",
-    ]);
-}
-```
-
-___
-
-## Conclusion
-
-Build your api and consum it!

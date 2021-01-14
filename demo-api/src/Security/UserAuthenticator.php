@@ -17,7 +17,7 @@ class UserAuthenticator extends AbstractGuardAuthenticator
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * UserAuthenticator constructor.
