@@ -123,17 +123,6 @@ public function new(Request $request)
       * `form_label` display a label
       * `form_widget` display the input
 
-*Example*
-
-```twig
-{{ form_start(form) }}
-{{ form_errors(form.myAttribute) }}
-{{ form_label(form.myAttribute) }}
-{{ form_widget(form.myAttribute) }}
-   <button type="submit">Sign in</button>
-{{ form_end(form) }}
-```
-
 ___
 
 📝 Customize the generated signup form as the example below

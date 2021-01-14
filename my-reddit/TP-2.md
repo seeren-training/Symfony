@@ -62,14 +62,6 @@ $session->getFlashBag()->add('success', 'Account created');
 
 After a redirect the success message will be available on the display.
 
-```html
-{% for message in app.flashes('success') %}
-    <div class="alert alert-success">
-        {{ message }}
-    </div>
-{% endfor %}
-```
-
 > 🙈 Without arguments flashes retrieve messages for all levels 
 
 [@see https://symfony.com/doc/current/components/http_foundation/sessions.html#flash-messages](https://symfony.com/doc/current/components/http_foundation/sessions.html#flash-messages)
@@ -144,10 +136,6 @@ A controller can embed and render controller using twig.
 ### **Pass Request and others**
 
 Invoquing manually controller action, you do not have autowiring, you have to pass at least Request for example. In twig you can have access to some important variables. It'll be useful to do not pass Request to render it is already there.
-
-```twig
-{{ dump(app.request) }}
-```
 
 [@see https://symfony.com/doc/4.0/templating/app_variable.html](https://symfony.com/doc/4.0/templating/app_variable.html)
 
