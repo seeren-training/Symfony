@@ -45,7 +45,10 @@ L'utilitaire demande un nom d'entité puis propose de créer ses attributs. Une 
 
 L'utilitaire ne propose pas de rajouter la contrainte unique.
 
-> Il est possible de générer les entities à partir d'une base de données: https://symfony.com/doc/current/doctrine/reverse_engineering.html
+> Il est possible de générer les entities à partir d'une base de données.
+
+[Reverse Engineering](https://symfony.com/doc/current/doctrine/reverse_engineering.html)
+
 
 ### 🏷️ **Unique**
 
@@ -59,7 +62,9 @@ Pour ajouter la contrainte sur une colonne il faut la préciser dans l'annotatio
 
 Pour ajouter une contrainte sur plusieurs colonnes il faut le spécifier sur l'annotation de la table.
 
-CF: https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/reference/annotations-reference.html#annref_uniqueconstraint
+[Reverse Engineering](https://symfony.com/doc/current/doctrine/reverse_engineering.html)
+
+CF: 
 
 ```php
 /**
@@ -74,13 +79,13 @@ ___
 
 Nous pouvons à partir de vos entities créer les tables. C'est une manipulation en deux étapes.
 
-*Créer le schéma de migration*
+* Créer le schéma de migration
 
 ```bash
 bin/console make:migration
 ```
 
-*Exécuter la migration*
+* Exécuter la migration
 
 ```bash
 bin/console doctrine:migrations:migrate
@@ -88,7 +93,7 @@ bin/console doctrine:migrations:migrate
 
 Quand vous modifiez une entity, il faut refaire la migration. Cependant doctrine possède un outil pour forcer la mise à jour des tables en cas de conflit de migration
 
-*Update des tables sans migration*
+* Update des tables sans migration
 
 ```bash
  bin/console doctrine:schema:update --force --dump-sql
@@ -108,5 +113,3 @@ ___
 
 Utilisez un diagramme d'entité pour penser vos tables et identifiants et validons les.
 Utilisez le maker et doctrine pour créer vos tables à partir de vos entities.
-
-___

@@ -113,14 +113,15 @@ Pour installer un package il faut utiliser composer. Depuis la version 4, Symfon
 
 ### 🏷️ **Installation**
 
-Pour installer un package qui vérifie nos pre requis si vous n'avez pas installer le bainary symfony nous pouvons utiliser cette commande que nous trouvons sur la [documentation](https://symfony.com/doc/4.2/reference/requirements.html).
+Pour installer un package qui vérifie nos pre requis si vous n'avez pas installer le bainary symfony nous pouvons utiliser cette commande que nous trouvons sur la documentation.
+
+[Requirements](https://symfony.com/doc/4.2/reference/requirements.html)
 
 ```bash
 composer require symfony/requirements-checker
 ```
 
-Et le server Flex propose les alias suivants:
-`req-check`, `req-checker`, `req-checks`, `requirement-check`, `requirement-checker`, `requirements-checker`.
+Et le server Flex propose les alias suivants: `req-check`, `req-checker`, `req-checks`, `requirement-check`, `requirement-checker`, `requirements-checker`.
 
 ### 🏷️ **Recette**
 
@@ -146,11 +147,11 @@ ___
 
 Pour vous référer à des conventions et un coding style, je vous invite à observer le PSR-1 et les ressources Symfony.
 
-* PSR-1: https://www.php-fig.org/psr/psr-1/
+[PSR-1](https://www.php-fig.org/psr/psr-1/)
 
-* Coding Standards: https://symfony.com/doc/current/contributing/code/standards.html#structure
+[Coding Standards](https://symfony.com/doc/current/contributing/code/standards.html#structure)
 
-* Convention: https://symfony.com/doc/current/contributing/code/conventions.html
+[Convention](https://symfony.com/doc/current/contributing/code/conventions.html)
 
 ___
 
@@ -178,6 +179,4 @@ ___
 
 👨🏻‍💻 Manipulation
 
-Observez les commandes, posez des questions en rapport
-
-___
+Observez les commandes, posez des questions en rapport.

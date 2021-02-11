@@ -49,7 +49,10 @@ Chaque erreur est logée dans un fichier.
 
 Par défaut le log se fait en mode développement et production, mais en production seul les error, critical, alert et emergency seront logés...
 
-Il est possible de [spécifier différents fichiers de log](https://symfony.com/doc/current/logging/channels_handlers.html) par channel (doctrine, event, security, request).
+Il est possible de spécifier différents fichiers de log par channel (doctrine, event, security, request).
+
+[Channels](https://symfony.com/doc/current/logging/channels_handlers.html)
+
 ___
 
 ## 📑 [Configuration](https://symfony.com/doc/current/configuration.html)
@@ -58,7 +61,7 @@ Chaque fonctionnalité peut se configurer dans le dossier `config/`. Quand il s�
 
 Par exemple pour configurer un fichier de log spécifique pour les erreurs http, il faudra en fonction de l'environnement modifier le fichier de configuration correspondant.
 
-*config/packages/dev/monolog.yml*
+* config/packages/dev/monolog.yml
 
 ```yml
 monolog:

@@ -24,7 +24,7 @@ bin/console make:form
 
 Dans le controller, il faut construire le formulaire et la passer à la vue en créant une vue de formulaire.
 
-*Controller*
+* Controller
 
 ```php
 $entity = new Foo();
@@ -36,7 +36,7 @@ return $this->render('foo/new.html.twig', [
 
 Si voter entity possède des classes en relation, vous aurez peut être un problème de conversion de l'instance au format chaine de caractère. Il y a plusieurs solutions, comme implémenter la méthode `__toString` dans la classe en relation. Il faut renvoyer l'attribut qui qualifie la valeur.
 
-*Entity*
+* Entity
 
 ```php
 public function __toString()
@@ -59,7 +59,7 @@ Chaque attribut de votre Entity peut posséder un élément HTML spécifiques. P
 
 > La modifications des types se fait en second argument de la méthode `add` du builder.
 
-*Type*
+* Type
 
 ```php
 $builder->add('email', EmailType::class)
@@ -76,7 +76,9 @@ Les types sont groupés par catégories.
 * Buttons
 * Base Fields
 
-Pour chaque catégories il faut suivre la documentation et utiliser le type correctement: https://symfony.com/doc/current/reference/forms/types.html
+Pour chaque catégories il faut suivre la documentation et utiliser le type correctement.
+
+[Types](https://symfony.com/doc/current/reference/forms/types.html)
 
 Certains types attendent des options en troisième argument de `add`. Par exemple le type entity vous permet d'agréger une entité, un select se fait automatiquement.
 
@@ -115,7 +117,7 @@ Pour afficher le formulaire, plusieurs functions sont disponibles dans twig.
 
 ### 🏷️ **Start**
 
-Un formulaire doit s'ouvrir, `form_start` permet de créer l'ouverture du tag <form>
+Un formulaire doit s'ouvrir, `form_start` permet de créer l'ouverture du tag form.
 
 ```twig
 {{ form_start(form) }}
@@ -195,7 +197,7 @@ Pour valider votre formulaire, vous devez contraindre vos champs à une valeur a
 
 Les contraintes disponibles sont nombreuses, chaque documentation doit être étudiée avant de l'appliquer.
 
-*Entity*
+* Entity
 
 ```php
 use Symfony\Component\Validator\Constraints as Assert;
@@ -218,7 +220,7 @@ De cette façon il est possible de prendre en compte les erreurs au niveau du fo
 
 Quand votre formulaire est submit et valid vous souhaitez certainement étudier l'accès aux données.
 
-*Controller*
+* Controller
 
 ```php
 $entity = new Foo();
@@ -237,5 +239,3 @@ ___
 👨🏻‍💻 Manipulation
 
 Préparez vous à insérer la donnée.
-
-___

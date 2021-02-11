@@ -21,7 +21,7 @@ L'utilitaire Maker est disponible pour créer un controller et ses actions.
 
 ### 🏷️ **Controller**
 
-*Créer un controller*
+* Créer un controller
 
 ```bash
 bin/console/make:controller
@@ -33,13 +33,13 @@ bin/console/make:controller Foo
 
 La création d'un dossier dépend de votre environnement.
 
-*Unix*
+* Unix
 
 ```bash
 bin/console/make:controller Foo\\Bar
 ```
 
-*Window*
+* Window
 
 ```bash
 bin/console/make:controller Foo\Bar
@@ -153,7 +153,7 @@ C'est la partie d'url après le host et le port. C'est ce qui permet de faire co
 
 Un chemin peut avoir des paramètres.
 
-Pour le chemin `"/foo/7"` l'action sera bien invoquée. L'identifiant du paramètre respecte les conventions de nommage des variables. Il est possible de déclarer plusieurs paramètres.
+Pour le chemin `/foo/7` l'action sera bien invoquée. L'identifiant du paramètre respecte les conventions de nommage des variables. Il est possible de déclarer plusieurs paramètres.
 
 ```php
 /**
@@ -226,4 +226,3 @@ ___
 👨🏻‍💻 Manipulation
 
 Créer les controllers anticipables en utilisant le nommage observé.
-___

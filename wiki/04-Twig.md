@@ -60,7 +60,9 @@ Les variables peuvent être modifiées par des filtres. Les filtres sont sépar�
 {{ title|upper }}
 ```
 
-> Symfony ajoute des filtres à Twig: https://symfony.com/doc/current/reference/twig_reference.html#filters
+> Symfony ajoute des filtres à Twig.
+
+[Twig Filters](https://symfony.com/doc/current/reference/twig_reference.html#filters)
 
 ___
 
@@ -72,7 +74,9 @@ ___
 
 Les fonctions permettent d'obtenir une valeur de retour affichée dans le template.
 
-> Symfony ajoute des fonctions à Twig: https://symfony.com/doc/current/reference/twig_reference.html#functions
+> Symfony ajoute des fonctions à Twig.
+
+[Twig Functions](https://symfony.com/doc/current/reference/twig_reference.html#functions)
 
 ___
 
@@ -84,7 +88,7 @@ ___
 
 L'instruction include comprend un template et renvoie le contenu rendu de ce fichier.
 
-> La convention de nommage pour les éléments inclus correspond à les préfixer par un `"_"`: https://github.com/symfony/demo/tree/master/templates/admin/blog
+> La convention de nommage pour les éléments inclus correspond à les préfixer par un `_`.
 
 ___
 
@@ -98,7 +102,7 @@ Définissons un template de base, base.html, qui définit un simple document squ
 
 Pour inclure du contenu dans le squelette il faut utiliser la notion de bloc.
 
-> La convention de nommage pour les éléments hérités correspond à les nommer `"layout.html.twig"`: https://github.com/symfony/demo/tree/master/templates/admin
+> La convention de nommage pour les éléments hérités correspond à les nommer `layout.html.twig`.
 
 ___
 
@@ -108,7 +112,7 @@ Les blocs sont utilisés pour l'héritage et agissent comme des espaces réserv�
 
 Une fois que l'on hérite du template, il n'est pas possible de déclarer du contenu en dehors des blocs déclarés mais il est possible de créer de nouveaux blocs en dehors de blocs déclarés.
 
-*Parent*
+* Parent
 
 ```twig
 <!DOCTYPE html>
@@ -125,7 +129,7 @@ Une fois que l'on hérite du template, il n'est pas possible de déclarer du con
 </html>
 ```
 
-Enfant
+* Enfant
 
 ```twig
 <!DOCTYPE html>
@@ -203,23 +207,23 @@ ___
 
 Avoir un système de template c'est bien, mais comment intégrer vos assets. Symfony propose une solution simplifiée pour l'utilisation de webpack.
 
-* *Installer Webpack Encore*
+* Installer Webpack Encore
 
 ```bash
 composer require symfony/webpack-encore-bundle
 ```
 
-* *Télécharger les pakages front-end*
+* Télécharger les pakages front-end
 
 ```bash
 npm install
 ```
 
-* *Configurer*
+* Configurer
 
 Si vous souhaitez modifier les points d'entré, utiliser un pré-processor ou autre pre-built setting, rendez vous sur le fichier webpack.config.js et sur sa documentation.
 
-* *Utiliser*
+* Utiliser
 
 Pour utiliser Webpack, des scripts sont présents dans le package.json.
 
@@ -227,17 +231,17 @@ Pour utiliser Webpack, des scripts sont présents dans le package.json.
 npm run watch
 ```
 
-* *Intégrer*
+* Intégrer
 
-Pour intégrer les fichiers qui sont générés dans "public/build", des [extensions twig pour webpack-encore](https://symfony.com/doc/current/frontend/encore/simple-example.html#configuring-encore-webpack) sont prévues afin de créer automatiquement les liens.
+Pour intégrer les fichiers qui sont générés dans "public/build", des extensions twig pour webpack-encore sont prévues afin de créer automatiquement les liens.
 
-Les balise link:
+* Les balise link
 
 ```twig
 {{ encore_entry_link_tags('app') }}
 ```
 
-Les balise script:
+* Les balise script
 
 ```twig
 {{ encore_entry_script_tags('app') }}
@@ -247,5 +251,3 @@ ___
 👨🏻‍💻 Manipulation
 
 Utiliser webpack-encore et compléter vos templates pour utiliser un framework CSS. Proposer les éléments de navigation en utilisant le fonction concernant webpack et `path`.
-
-___

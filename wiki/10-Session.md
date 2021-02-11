@@ -24,7 +24,7 @@ public function new(SessionInterface $session)
 
 La session se démarre automatiquement.
 
-______
+___
 
 ## 📑 [Manipuler](https://symfony.com/doc/current/session.html#basic-usage)
 
@@ -36,13 +36,13 @@ Les méthodes set et get et remove permettent simplement de manipuler la session
 $this->session->set('my-key', 'my-value');
 ```
 
-*Get*
+* Get
 
 ```php
 $value = $this->session->get('my-key');
 ```
 
-*Remove*
+* Remove
 
 ```php
 $this->session->remove('my-key');
@@ -82,5 +82,3 @@ ___
 👨🏻‍💻 Manipulation
 
 Utiliser le Flash Bag pour afficher des messages de succès ou d'erreurs lors de redirections.
-
-___

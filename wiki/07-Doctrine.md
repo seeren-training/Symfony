@@ -106,7 +106,7 @@ $entity = $repo->find($id)
 
 La méthode findOneBy attend un critère de recherche.
 
-* Le premier argument est un tableau pour spécifier la correspondance des colonnes attendues et correspond à utiliser l'opérateur `AND`.
+* Le premier argument est un tableau pour spécifier la correspondance des colonnes attendues et correspond à utiliser l'opérateur AND.
 
 ```php
 $entity = $repo->findOneBy([
@@ -117,7 +117,7 @@ $entity = $repo->findOneBy([
 
 #### **One by attribut**
 
-La méthode `findOneBy` *peut avoir son identifiant complété par le nom d'un attribut en utilisation la notation camelCase* pour le concaténer et renvoie la même chose que `find`.
+La méthode `findOneBy` peut avoir son identifiant complété par le nom d'un attribut en utilisation la notation camelCase pour le concaténer et renvoie la même chose que `find`.
 
 ```php
 $entity = $repo->findOneByEmail($mail)
@@ -131,7 +131,7 @@ Pour récupérer une collection d'entity il existe différentes méthodes que no
 
 En enlevant le One, le valeur de retour sera toujours un tableau.
 
-* Il est possible de spécifier une liste de valeur acceptable pour la correspondance à un attribut ce qui correspond à utiliser l'opérateur `IN`.
+* Il est possible de spécifier une liste de valeur acceptable pour la correspondance à un attribut ce qui correspond à utiliser l'opérateur IN.
 
 ```php
 $entites = $repo->findBy([
@@ -142,7 +142,7 @@ $entites = $repo->findBy([
 ]);
 ```
 
-* L'ordre de sélection se spécifie en second argument ce qui correspond à utiliser `ORDER BY`.
+* L'ordre de sélection se spécifie en second argument ce qui correspond à utiliser ORDER BY.
 
 ```php
 $entity = $repo->findBy(
@@ -158,7 +158,7 @@ $entity = $repo->findBy(
 );
 ```
 
-* La limite de sélection et le décalage se spécifie en argument trois et quatre et correspondent à `LIMIT` et `OFFSET`.
+* La limite de sélection et le décalage se spécifie en argument trois et quatre et correspondent à LIMIT et OFFSET.
 
 ```php
 $entity = $repo->findBy(
@@ -231,6 +231,4 @@ ___
 
 👨🏻‍💻 Manipulation
 
-Mettez en place la logique métier en utilisant l'ORM Doctrine
-
-___
+Mettez en place la logique métier en utilisant l'ORM Doctrine.

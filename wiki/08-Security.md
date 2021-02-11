@@ -110,5 +110,3 @@ ___
 👨🏻‍💻 Manipulation
 
 Gérez vos droits d'accès aux controllers puis gérez la logique d'affichage.
-
-___

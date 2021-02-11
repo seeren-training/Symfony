@@ -34,7 +34,7 @@ ___
 
 Les fichiers de traduction sont placés dans `translations`. Vous pouvez stocker des fichiers par domain et par langue.
 
-*translations/messages.en.yaml*
+* translations/messages.en.yaml
 
 ```yaml
 user:
@@ -44,14 +44,14 @@ user:
   confirm: Confirmation
 ```
 
-*translations/validators.en.yaml*
+* translations/validators.en.yaml
 
 ```yaml
 user:
   confirm: The confirmation must match
 ```
 
-*translations/errors.en.yaml*
+* translations/errors.en.yaml
 
 ```yaml
 user:
@@ -64,15 +64,15 @@ ___
 
 Pour utiliser vos traductions vous devez remarquez que les formulaires traduisent automatiquement les messages de label en utilisant le domain "messages" et d'erreur en utilisant le domain "validators".
 
-Dans le cadre d'un controller, il faut utiliser l'[autowiring](https://symfony.com/doc/current/translation.html#basic-translation).
+Dans le cadre d'un controller, il faut utiliser l'autowiring.
 
 ```php
 $error = $translator->trans("user.exists", [], "errors"));
 ```
 
-Dans twig il faut utiliser le filtre [trans](https://symfony.com/doc/current/translation/templates.html#using-twig-filters).
+Dans twig il faut utiliser le filtre trans.
 
-```php
+```twig
 {{ error|trans }}
 ```
 
@@ -81,5 +81,3 @@ ___
 👨🏻‍💻 Manipulation
 
 Traduisez vos affichages.
-
-___

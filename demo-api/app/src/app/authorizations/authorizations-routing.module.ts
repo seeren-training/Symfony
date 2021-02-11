@@ -13,11 +13,17 @@ const routes: Routes = [
         children: [
             {
                 path: 'login',
-                component: LoginComponent
+                component: LoginComponent,
+                data: {
+                    title: 'Login title',
+                }
             },
             {
                 path: 'register',
-                component: RegisterComponent
+                component: RegisterComponent,
+                data: {
+                    title: 'Register title',
+                }
             },
             {
                 path: '**',
