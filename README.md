@@ -1,4 +1,4 @@
-# Symfony
+# Symfony - A PHP Framework
 
 ## Durée
 
