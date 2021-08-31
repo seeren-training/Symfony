@@ -1,7 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_member.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Nouveau Repas - {{ parent() }}{% endblock %}
 
 {% block body %}
-New
+    <div class="row">
+        <h1 class="col">Nouveau Repas</h1>
+    </div>
 {% endblock %}

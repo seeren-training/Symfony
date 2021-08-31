@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('user_login') }}">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('user_new') }}">Inscription</a>
+        </li>
+    </ul>
+{% endblock %}
