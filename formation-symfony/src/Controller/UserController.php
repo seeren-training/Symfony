@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Profile;
+use App\Form\ProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,7 +34,11 @@ class UserController extends AbstractController
     #[Route('/user/edit', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(): Response
     {
-        return $this->render('user/edit.html.twig');
+        $profile = new Profile();
+        $form = $this->createForm(ProfileType::class, $profile);
+        return $this->render('user/edit.html.twig',[
+            'form' => $form->createView()
+        ]);
     }
 
 }
