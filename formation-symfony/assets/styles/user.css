@@ -1,0 +1,14 @@
+.user_new, .user_login {
+    background-image: url("./../images/bg-dashboard.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.user_new h1, .user_login h1 {
+    color: white;
+}
+.user_edit .avatar {
+    background-image: url("./../images/item-avatar.jpg");
+    background-size: auto 100% ;
+    background-position: center;
+    background-repeat: no-repeat;
+}
