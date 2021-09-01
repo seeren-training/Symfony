@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Meal App{% endblock %}</title>
-
     {% block stylesheets %}
-        {# {{ encore_entry_link_tags('app') }} #}
+        {{ encore_entry_link_tags('app') }}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
     {% endblock %}
-
 </head>
-<body class="d-flex min-vh-100 flex-column">
+<body class="d-flex min-vh-100 flex-column {{ app.request.get('_route') }}">
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
@@ -35,9 +33,9 @@
 </footer>
 
 {% block javascripts %}
-    <script></script>
-    {# {{ encore_entry_script_tags('app') }} #}
+    {{ encore_entry_script_tags('app') }}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}
+
 </body>
 </html>

@@ -3,7 +3,33 @@
 {% block title %}Profile - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <div class="row">
+    <div class="row  w-100">
         <h1 class="col">Profile</h1>
+        {{ form_start(form, { attr: { class: 'col-12 row' } }) }}
+        <div class="col-12 col-md-5">
+            <div class="mb-2 mt-2 avatar" style="height: 10.75em;"></div>
+            <div class="mb-2 mt-4">
+                {{ form_widget(form.avatar, { attr: { class: 'form-control' } }) }}
+            </div>
+        </div>
+        <div class="col-12 col-md-7">
+            <div class="mt-4">
+                {{ form_label(form.age, 'Age') }}:
+                <span class="range-value">-</span>
+                {{ form_widget(form.age, { attr: { class: 'form-range', onchange: 'updateRangeValue()' } }) }}
+                <script type="text/javascript">
+                    const updateRangeValue = () => document.querySelector('.range-value').innerText = document.querySelector('.form-range').value;
+                </script>
+            </div>
+            <div class="mb-2 mt-2">
+                {{ form_label(form.address, 'Adresse' ) }}
+                {{ form_widget(form.address, { attr: { class: 'form-control' } }) }}
+            </div>
+            <div class="mb-2 mt-2">
+                {{ form_label(form.description, 'Description' ) }}
+                {{ form_widget(form.description, { attr: { class: 'form-control' } }) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

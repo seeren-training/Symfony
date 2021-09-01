@@ -3,7 +3,50 @@
 {% block title %}Nouveau Repas - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <h1 class="col">Nouveau Repas</h1>
+    <div class="row w-100">
+        <h1>Nouveau Repas</h1>
+        {{ form_start(form, { attr: { class: 'col-12 row', novalidate: 'novalidate' } }) }}
+        <div class="col-12 col-md-7">
+            <div class="mb-2 mt-2">
+                {{ form_label(form.name, 'Intitulé du repas' ) }}
+                {{ form_widget(form.name, { attr: { class: 'form-control' } }) }}
+            </div>
+            <div class="mb-2 mt-2">
+                {{ form_label(form.description, 'Ambiance' ) }}
+                {{ form_widget(form.description, { attr: { class: 'form-control' } }) }}
+            </div>
+            <div class="mt-4">
+                {{ form_label(form.maxAttendees, 'Capacité maximum') }}:
+                <span class="range-value">-</span>
+                {{ form_widget(form.maxAttendees, { attr: { class: 'form-range', onchange: 'updateRangeValue()' } }) }}
+                <script type="text/javascript">
+                    const updateRangeValue = () => document.querySelector('.range-value').innerText = document.querySelector('.form-range').value;
+                </script>
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div class="mb-2 mt-2 row">
+                {{ form_label(form.date, 'Date' ) }}
+                <div class="col-4">
+                    {{ form_widget(form.date.date.year, { attr: { class: 'form-select', placeholder: 'Année' } }) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.date.date.month, { attr: { class: 'form-select' } }) }}
+                </div>
+                <div class="col-4">
+                    {{ form_widget(form.date.date.day, { attr: { class: 'form-select' } }) }}
+                </div>
+            </div>
+            <div class="mb-2 mt-2 row">
+                {{ form_label(form.date, 'Horaire' ) }}
+                <div class="col-6">
+                    {{ form_widget(form.date.time.hour, { attr: { class: 'form-select' } }) }}
+                </div>
+                <div class="col-6">
+                    {{ form_widget(form.date.time.minute, { attr: { class: 'form-select' } }) }}
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
     </div>
 {% endblock %}
