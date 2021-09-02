@@ -17,15 +17,14 @@ class MealType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('maxAttendees', RangeType::class)
-            ->add('date', DateTimeType::class, [
-                'placeholder' => [
-                    'year' => 'Année',
-                    'month' => 'Mois',
-                    'day' => 'Jour',
-                    'hour' => 'Heure',
-                    'minute' => 'Minute',
+            ->add('maxAttendees', RangeType::class, [
+                'attr' => [
+                    'min' => 1,
+                    'max' => 10
                 ]
+            ])
+            ->add('date', DateTimeType::class, [
+                "data" => new \DateTime()
             ])
             ->add('name', TextType::class)
             ->add('description', TextareaType::class);

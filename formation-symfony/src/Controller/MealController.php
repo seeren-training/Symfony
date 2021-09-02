@@ -20,10 +20,16 @@ class MealController extends AbstractController
 
 
     #[Route('/meal/new', name: 'meal_new', methods: ['GET', 'POST'])]
-    public function new(): Response
+    public function new(Request $request): Response
     {
         $meal = new Meal();
         $form = $this->createForm(MealType::class, $meal);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($meal);
+            $em->flush();
+        }
         return $this->render('meal/new.html.twig', [
             "form" => $form->createView()
         ]);

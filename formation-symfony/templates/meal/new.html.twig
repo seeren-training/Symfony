@@ -9,15 +9,24 @@
         <div class="col-12 col-md-7">
             <div class="mb-2 mt-2">
                 {{ form_label(form.name, 'Intitulé du repas' ) }}
+                {% if not form.name.vars.valid %}
+                    <div class="alert alert-danger">{{ form_errors(form.name) }}</div>
+                {% endif %}
                 {{ form_widget(form.name, { attr: { class: 'form-control' } }) }}
             </div>
             <div class="mb-2 mt-2">
                 {{ form_label(form.description, 'Ambiance' ) }}
+                {% if not form.description.vars.valid %}
+                    <div class="alert alert-danger">{{ form_errors(form.description) }}</div>
+                {% endif %}
                 {{ form_widget(form.description, { attr: { class: 'form-control' } }) }}
             </div>
             <div class="mt-4">
                 {{ form_label(form.maxAttendees, 'Capacité maximum') }}:
-                <span class="range-value">-</span>
+                {% if not form.maxAttendees.vars.valid %}
+                    <div class="alert alert-danger">{{ form_errors(form.maxAttendees) }}</div>
+                {% endif %}
+                <span class="range-value">5</span>
                 {{ form_widget(form.maxAttendees, { attr: { class: 'form-range', onchange: 'updateRangeValue()' } }) }}
                 <script type="text/javascript">
                     const updateRangeValue = () => document.querySelector('.range-value').innerText = document.querySelector('.form-range').value;
@@ -27,6 +36,9 @@
         <div class="col-12 col-md-5">
             <div class="mb-2 mt-2 row">
                 {{ form_label(form.date, 'Date' ) }}
+                {% if not form.date.vars.valid %}
+                    <div class="alert alert-danger">{{ form_errors(form.date) }}</div>
+                {% endif %}
                 <div class="col-4">
                     {{ form_widget(form.date.date.year, { attr: { class: 'form-select', placeholder: 'Année' } }) }}
                 </div>
@@ -45,6 +57,9 @@
                 <div class="col-6">
                     {{ form_widget(form.date.time.minute, { attr: { class: 'form-select' } }) }}
                 </div>
+            </div>
+            <div class="mb-2 mt-5 pt-4 row justify-content-center">
+                <button type="submit" class="w-75 btn btn-success">Créer</button>
             </div>
         </div>
         {{ form_end(form) }}

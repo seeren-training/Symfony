@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MealRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MealRepository::class)
@@ -19,21 +20,29 @@ class Meal
     private $id;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Range(min = 1, max = 10)
      * @ORM\Column(type="smallint")
      */
     private $maxAttendees;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Range(min = "+12 hour", max = "1 years")
      * @ORM\Column(type="datetime")
      */
     private $date;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(min = 2, max = 255)
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(min = 32, max = 255)
      * @ORM\Column(type="text")
      */
     private $description;
