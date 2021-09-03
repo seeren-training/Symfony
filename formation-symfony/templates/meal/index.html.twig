@@ -5,5 +5,23 @@
 {% block body %}
     <div class="row">
         <h1 class="col">Liste des Repas</h1>
+
+        <ul>
+            {% for meal in mealList %}
+                <li>
+                    Id: {{ meal.id }} <br>
+                    <a href="{{
+                        path('meal_show', {
+                            id: meal.id
+                        })
+                    }}">Name: {{ meal.name }}</a><br>
+                    Description: {{ meal.description }} <br>
+                    Attendees: {{ meal.maxAttendees }} <br>
+                    Date: {{ meal.date|date('Y/m/d : h-i') }} <br>
+                </li>
+
+            {% endfor %}
+        </ul>
+
     </div>
 {% endblock %}

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Meal;
 use App\Form\MealType;
+use App\Repository\MealRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,22 +15,25 @@ class MealController extends AbstractController
 {
 
     #[Route('/meal', name: 'meal', methods: ['GET'])]
-    public function index(): Response
+    public function index(MealRepository $mealRepository): Response
     {
-        return $this->render('meal/index.html.twig');
+        $mealList = $mealRepository->findAll();
+        return $this->render('meal/index.html.twig', [
+            'mealList' => $mealList
+        ]);
     }
 
-
     #[Route('/meal/new', name: 'meal_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    public function new(
+        Request        $request,
+        MealRepository $mealRepository): Response
     {
         $meal = new Meal();
         $form = $this->createForm(MealType::class, $meal);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($meal);
-            $em->flush();
+            $mealRepository->insert($meal);
+            return $this->redirectToRoute('meal');
         }
         return $this->render('meal/new.html.twig', [
             "form" => $form->createView()
@@ -36,10 +41,10 @@ class MealController extends AbstractController
     }
 
     #[Route('/meal/{id<[0-9]{1,11}>}', name: 'meal_show', methods: ['GET'])]
-    public function show($id, Request $req): Response
+    public function show(Meal $meal): Response
     {
         return $this->render('meal/show.html.twig', [
-            'id' => $id,
+            'meal' => $meal,
         ]);
     }
 
