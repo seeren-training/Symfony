@@ -29,7 +29,7 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe doit correspondre',
-                'first_options'  => ['label' => 'Mot de pass'],
+                'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmation'],
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],

@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title>{% block title %}Meal App{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -22,12 +23,12 @@
     </div>
 </nav>
 
-<main class="container d-flex flex-shrink-0 flex-grow-1 pt-4 pb-4">
+<main class="container d-flex flex-shrink-0 flex-grow-1 pt-4 pb-4 justify-content-center">
     {% block body %}{% endblock %}
 </main>
 
 <footer class="navbar navbar-light bg-light">
-    <div class="container-fluid">
+    <div class="container-fluid text-center">
         <span class="m-auto">Formation Symfony 2021 - Product Owner Emmanuelle</span>
     </div>
 </footer>

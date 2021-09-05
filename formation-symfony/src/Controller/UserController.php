@@ -7,22 +7,11 @@ use App\Form\ProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class UserController extends AbstractController
 {
-
-    #[Route('/user/new', name: 'user_new', methods: ['GET', 'POST'])]
-    public function new(): Response
-    {
-        return $this->render('user/new.html.twig');
-    }
-
-    #[Route('/user/login', name: 'user_login', methods: ['GET', 'POST'])]
-    public function login(): Response
-    {
-        return $this->render('user/login.html.twig');
-    }
-
+    #[IsGranted('ROLE_USER')]
     #[Route('/user/{id<[0-9]{1,11}>}', name: 'user_show', methods: ['GET'])]
     public function show($id): Response
     {
@@ -31,6 +20,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/user/edit', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(): Response
     {

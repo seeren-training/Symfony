@@ -1,21 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_visitor.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm, {
-        attr: {
-            novalidate: 'novalidate'
-        }
-    }) }}
-    {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.plainPassword, {
-        label: 'Password'
-    }) }}
-    {{ form_row(registrationForm.agreeTerms) }}
-
-    <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    <div class="row w-100 py-4  h-25 justify-content-center">
+        {{ form_start(form, { attr: { class: 'col-12 row justify-content-center', novalidate: 'novalidate' } }) }}
+        <div class="card p-5 col-12 col-md-7">
+            <h1>Inscription</h1>
+            <div class="mb-2 mt-2">
+                {{ form_label(form.email ) }}
+                {% if not form.email.vars.valid %}
+                    {% include '_alert.html.twig' with { error: form_errors(form.email) } %}
+                {% endif %}
+                {{ form_widget(form.email, { attr: { class: 'form-control' } }) }}
+            </div>
+            <div class="mb-2 mt-2">
+                {{ form_label(form.plainPassword.first ) }}
+                {% if not form.plainPassword.first.vars.valid %}
+                    {% include '_alert.html.twig' with { error: form_errors(form.plainPassword.first) } %}
+                {% endif %}
+                {{ form_widget(form.plainPassword.first, { attr: { class: 'form-control' } }) }}
+            </div>
+            <div class="mb-4 mt-2">
+                {{ form_label(form.plainPassword.second ) }}
+                {{ form_widget(form.plainPassword.second, { attr: { class: 'form-control' } }) }}
+            </div>
+            <div class="mb-2 mt-4">
+                {% if not form.agreeTerms.vars.valid %}
+                    {% include '_alert.html.twig' with { error: form_errors(form.agreeTerms) } %}
+                {% endif %}
+                {{ form_widget(form.agreeTerms, { attr: { class: 'form-check-input' } }) }}
+                {{ form_label(form.agreeTerms, "Je confirme vouloir créer un compte sur Meal App" ) }}
+            </div>
+            <div class=" pt-4 text-end">
+                <button type="submit" class="btn btn-success">Register</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

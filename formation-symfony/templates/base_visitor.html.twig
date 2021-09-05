@@ -2,11 +2,11 @@
 
 {% block navbar %}
     <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('user_login') }}">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('user_new') }}">Inscription</a>
-        </li>
+        {% for routeName in ['register', 'login'] %}
+            <li class="nav-item">
+                <a class="nav-link {{ app.request.get('_route') == routeName ? 'active' : '' }}"
+                   href="{{ path(routeName) }}">{{ routeName|capitalize }}</a>
+            </li>
+        {% endfor %}
     </ul>
 {% endblock %}
