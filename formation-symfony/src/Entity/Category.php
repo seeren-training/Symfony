@@ -20,12 +20,12 @@ class Category
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Meal::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Meal::class, mappedBy="categories")
      */
     private $meals;
 
@@ -47,18 +47,10 @@ class Category
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->name;
-    }
 
-    /**
-     * @return Collection|Meal[]
-     */
     public function getMeals(): Collection
     {
         return $this->meals;
@@ -68,7 +60,7 @@ class Category
     {
         if (!$this->meals->contains($meal)) {
             $this->meals[] = $meal;
-            $meal->addCategory($this);
+            $meal->addCategories($this);
         }
 
         return $this;
@@ -77,7 +69,7 @@ class Category
     public function removeMeal(Meal $meal): self
     {
         if ($this->meals->removeElement($meal)) {
-            $meal->removeCategory($this);
+            $meal->removeCategories($this);
         }
 
         return $this;

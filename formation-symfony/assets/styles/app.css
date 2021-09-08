@@ -3,3 +3,7 @@
     padding: 0;
     list-style-type: none;
 }
+a {
+    color: inherit !important;
+    text-decoration: none !important;
+}

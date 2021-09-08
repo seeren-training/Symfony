@@ -12,6 +12,11 @@
             Description: {{ meal.description }} <br>
             Attendees: {{ meal.maxAttendees }} <br>
             Date: {{ meal.date|date('Y/m/d : h-i') }} <br>
+            Category:
+            {% for category in meal.categories %}
+                {{ category.name }}
+            {% endfor %}
+            <br>
         </li>
 
 

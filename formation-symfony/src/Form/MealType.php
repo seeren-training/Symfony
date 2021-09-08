@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Meal;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
@@ -17,17 +19,16 @@ class MealType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('maxAttendees', RangeType::class, [
-                'attr' => [
-                    'min' => 1,
-                    'max' => 10
-                ]
-            ])
-            ->add('date', DateTimeType::class, [
-                "data" => new \DateTime()
-            ])
+            ->add('maxAttendees', RangeType::class)
+            ->add('date', DateTimeType::class, ["data" => new \DateTime()])
             ->add('name', TextType::class)
-            ->add('description', TextareaType::class);
+            ->add('description', TextareaType::class)
+            ->add('categories', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

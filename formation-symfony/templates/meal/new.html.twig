@@ -6,15 +6,31 @@
     <div class="row w-100">
         <h1>Nouveau Repas</h1>
         {{ form_start(form, { attr: { class: 'col-12 row', novalidate: 'novalidate' } }) }}
+        <div class="col-12">
+            <div class="my-2">
+                {{ form_label(form.categories, 'Catégories' ) }}
+                {% if not form.categories.vars.valid %}
+                    <div class="alert alert-danger">{{ form_errors(form.categories) }}</div>
+                {% endif %}
+            </div>
+            <div class="my-2">
+                {% for category in  form.categories.children %}
+                    <span class="badge badge-pill badge-info bg-primary text-white p-2">
+                        {{ form_widget(category, { attr: { class: 'form-check-input' } }) }}
+                        {{ form_label(category, '', { label_attr: { class: 'form-check-label ms-1' } }) }}
+                    </span>
+                {% endfor %}
+            </div>
+        </div>
         <div class="col-12 col-md-7">
-            <div class="mb-2 mt-2">
+            <div class="my-2">
                 {{ form_label(form.name, 'Intitulé du repas' ) }}
                 {% if not form.name.vars.valid %}
                     <div class="alert alert-danger">{{ form_errors(form.name) }}</div>
                 {% endif %}
                 {{ form_widget(form.name, { attr: { class: 'form-control' } }) }}
             </div>
-            <div class="mb-2 mt-2">
+            <div class="my-2">
                 {{ form_label(form.description, 'Ambiance' ) }}
                 {% if not form.description.vars.valid %}
                     <div class="alert alert-danger">{{ form_errors(form.description) }}</div>
@@ -27,14 +43,14 @@
                     <div class="alert alert-danger">{{ form_errors(form.maxAttendees) }}</div>
                 {% endif %}
                 <span class="range-value">5</span>
-                {{ form_widget(form.maxAttendees, { attr: { class: 'form-range', onchange: 'updateRangeValue()' } }) }}
+                {{ form_widget(form.maxAttendees, { attr: { class: 'form-range', min: 1, max: 10, onchange: 'updateRangeValue()' } }) }}
                 <script type="text/javascript">
                     const updateRangeValue = () => document.querySelector('.range-value').innerText = document.querySelector('.form-range').value;
                 </script>
             </div>
         </div>
         <div class="col-12 col-md-5">
-            <div class="mb-2 mt-2 row">
+            <div class="my-2 row">
                 {{ form_label(form.date, 'Date' ) }}
                 {% if not form.date.vars.valid %}
                     <div class="alert alert-danger">{{ form_errors(form.date) }}</div>
@@ -49,7 +65,7 @@
                     {{ form_widget(form.date.date.day, { attr: { class: 'form-select' } }) }}
                 </div>
             </div>
-            <div class="mb-2 mt-2 row">
+            <div class="my-2 row">
                 {{ form_label(form.date, 'Horaire' ) }}
                 <div class="col-6">
                     {{ form_widget(form.date.time.hour, { attr: { class: 'form-select' } }) }}

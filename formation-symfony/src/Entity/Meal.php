@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Meal
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -43,7 +44,7 @@ class Meal
 
     /**
      * @Assert\NotBlank
-     * @Assert\Length(min = 32, max = 255)
+     * @Assert\Length(min = 32, max = 2000)
      * @ORM\Column(type="text")
      */
     private $description;
@@ -51,11 +52,23 @@ class Meal
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="meals")
      */
-    private $category;
+    private $categories;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="meals")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $createdBy;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="meals")
+     */
+    private $attendees;
 
     public function __construct()
     {
-        $this->category = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->attendees = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,7 +84,6 @@ class Meal
     public function setMaxAttendees(int $maxAttendees): self
     {
         $this->maxAttendees = $maxAttendees;
-
         return $this;
     }
 
@@ -83,7 +95,6 @@ class Meal
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
         return $this;
     }
 
@@ -95,7 +106,6 @@ class Meal
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -107,31 +117,55 @@ class Meal
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
         return $this;
     }
 
-    /**
-     * @return Collection|Category[]
-     */
-    public function getCategory(): Collection
+    public function getCategories(): Collection
     {
-        return $this->category;
+        return $this->categories;
     }
 
-    public function addCategory(Category $category): self
+    public function addCategories(Category $category): self
     {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
         }
-
         return $this;
     }
 
-    public function removeCategory(Category $category): self
+    public function removeCategories(Category $category): self
     {
-        $this->category->removeElement($category);
+        $this->categories->removeElement($category);
+        return $this;
+    }
 
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
+        return $this;
+    }
+
+    public function getAttendees(): Collection
+    {
+        return $this->attendees;
+    }
+
+    public function addAttendee(User $attendee): self
+    {
+        if (!$this->attendees->contains($attendee)) {
+            $this->attendees[] = $attendee;
+        }
+        return $this;
+    }
+
+    public function removeAttendee(User $attendee): self
+    {
+        $this->attendees->removeElement($attendee);
         return $this;
     }
 

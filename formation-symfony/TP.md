@@ -45,7 +45,7 @@ Pour remplir la table "meal" des informations précédentes vous avez plusieurs 
 
 * 📝 **Modifiez le type "Meal"** en ajoutant le champ "category". Le formulaire à l'affichage doit proposer des checkbox permettant de choisir des catégories.
 
-Afin d'intégrer l'attribut relationnel, orientez vous vers "EntityType". Vous risquez d'avoir un problème de conversion en string, je vous invite à trouver une solution, éventuellement en reprennant le chapitre du support de cours concernant les formulaires.
+Afin d'intégrer l'attribut relationnel, orientez vous vers "EntityType".
 
 @see [entitytype](https://symfony.com/doc/current/reference/forms/types/entity.html)
 
