@@ -1,9 +1,0 @@
-.user_edit .avatar {
-    height: 10em;
-    width: 10em;
-    background-image: url("./../images/item-avatar.jpg");
-    background-size: cover ;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 50%;
-}

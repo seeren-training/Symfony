@@ -1,7 +1,0 @@
-user:
-  new: Créer un compte
-security:
-  login: S'identifier
-post:
-  new: Créer un Post
-  show_all: Liste des Post
