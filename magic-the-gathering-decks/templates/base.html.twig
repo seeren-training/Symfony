@@ -1,19 +1,53 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Magic The Gathering Decks{% endblock %}</title>
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <style>
+            nav .brand-logo {
+                padding: 0 1em;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
+<header>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="{{ path('mtgd_index') }}" class="brand-logo">MTGD</a>
+            <a href="#" data-target="sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                {% block nav_items %}{% endblock %}
+            </ul>
+        </div>
+    </nav>
+    <ul class="sidenav" id="sidenav">
+        {% block sidenav_items %}{% endblock %}
+    </ul>
+    {% block subnav %}{% endblock %}
+</header>
+
+<main>
+    <div class="container">
         {% block body %}{% endblock %}
-    </body>
+    </div>
+</main>
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        M.Sidenav.init(document.querySelectorAll('.sidenav'));
+    </script>
+{% endblock %}
+
+</body>
 </html>
+
+
+
+
+

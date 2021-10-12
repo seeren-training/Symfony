@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block nav_items %}
+    <li>
+        <a href="{{ path('deck_index') }}">Decks</a>
+    </li>
+    <li>
+        <a href="{{ path('auth_logout') }}">SignOut</a>
+    </li>
+{% endblock %}
+
+{% block sidenav_items %}
+    <li>
+        <a href="{{ path('deck_index') }}">Decks</a>
+    </li>
+{% endblock %}

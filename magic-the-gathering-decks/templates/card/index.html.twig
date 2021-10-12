@@ -1,6 +1,37 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_catalog.html.twig' %}
 
-{% block title %}Card index{% endblock %}
+{% block title %}Cards - {{ parent() }}{% endblock %}
+
+{% block sub_nav_items %}
+    <ul class="deck-picker right hide-on-med-and-down">
+        <select>
+            <option disabled selected>Select Deck</option>
+            <option>Offensive Deck</option>
+            <option>Defensive Deck</option>
+        </select>
+    </ul>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .deck-picker {
+            margin: .8em 1em 0;
+            padding: 0 .5em;
+        }
+
+        .deck-picker input {
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        M.FormSelect.init(document.querySelectorAll('select'));
+    </script>
+{% endblock %}
 
 {% block body %}
     <h1>Card index</h1>
