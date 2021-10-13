@@ -12,27 +12,6 @@
     </ul>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .deck-picker {
-            margin: .8em 1em 0;
-            padding: 0 .5em;
-        }
-
-        .deck-picker input {
-            color: white;
-        }
-    </style>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        M.FormSelect.init(document.querySelectorAll('select'));
-    </script>
-{% endblock %}
-
 {% block body %}
     <h1>Card index</h1>
 {% endblock %}

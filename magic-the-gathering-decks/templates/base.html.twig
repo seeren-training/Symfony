@@ -4,16 +4,12 @@
     <meta charset="UTF-8">
     <title>{% block title %}Magic The Gathering Decks{% endblock %}</title>
     {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <style>
-            nav .brand-logo {
-                padding: 0 1em;
-            }
-        </style>
     {% endblock %}
 </head>
-<body>
+<body class="{{ app.request.get('_route') }}">
 
 <header>
     <nav>
@@ -38,10 +34,8 @@
 </main>
 
 {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-        M.Sidenav.init(document.querySelectorAll('.sidenav'));
-    </script>
 {% endblock %}
 
 </body>

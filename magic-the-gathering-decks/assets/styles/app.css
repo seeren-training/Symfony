@@ -1,0 +1,12 @@
+nav .brand-logo {
+    padding: 0 1em;
+}
+
+.deck-picker {
+    margin: .8em 1em 0;
+    padding: 0 .5em;
+}
+
+.deck-picker input {
+    color: white;
+}

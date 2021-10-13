@@ -1,0 +1,5 @@
+body.auth_signin {
+    background-image: url("./../images/mtgd-bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
