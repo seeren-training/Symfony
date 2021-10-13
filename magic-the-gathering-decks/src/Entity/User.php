@@ -59,18 +59,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     public function getRoles(): array
@@ -106,9 +105,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
     }
 
-    /**
-     * @return Collection|Deck[]
-     */
     public function getDecks(): Collection
     {
         return $this->decks;
@@ -120,19 +116,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->decks[] = $deck;
             $deck->setUser($this);
         }
-
         return $this;
     }
 
     public function removeDeck(Deck $deck): self
     {
         if ($this->decks->removeElement($deck)) {
-            // set the owning side to null (unless already changed)
             if ($deck->getUser() === $this) {
                 $deck->setUser(null);
             }
         }
-
         return $this;
     }
 

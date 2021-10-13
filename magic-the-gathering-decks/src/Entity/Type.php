@@ -47,13 +47,9 @@ class Type
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
-    /**
-     * @return Collection|Card[]
-     */
     public function getCards(): Collection
     {
         return $this->cards;
@@ -65,7 +61,6 @@ class Type
             $this->cards[] = $card;
             $card->addType($this);
         }
-
         return $this;
     }
 
@@ -74,7 +69,7 @@ class Type
         if ($this->cards->removeElement($card)) {
             $card->removeType($this);
         }
-
         return $this;
     }
+
 }

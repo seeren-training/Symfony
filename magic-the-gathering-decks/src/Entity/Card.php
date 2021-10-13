@@ -25,16 +25,6 @@ class Card
     private $name;
 
     /**
-     * @ORM\Column(type="integer", unique=true)
-     */
-    private $multiverse_id;
-
-    /**
-     * @ORM\Column(type="string", length=32)
-     */
-    private $manaCoast;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $text;
@@ -48,6 +38,16 @@ class Card
      * @ORM\ManyToMany(targetEntity=Type::class, inversedBy="cards")
      */
     private $types;
+
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    private $manaCost;
+
+    /**
+     * @ORM\Column(type="integer", unique=true)
+     */
+    private $multiverseId;
 
     public function __construct()
     {
@@ -68,31 +68,6 @@ class Card
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getMultiverseId(): ?int
-    {
-        return $this->multiverse_id;
-    }
-
-    public function setMultiverseId(int $multiverse_id): self
-    {
-        $this->multiverse_id = $multiverse_id;
-
-        return $this;
-    }
-
-    public function getManaCoast(): ?string
-    {
-        return $this->manaCoast;
-    }
-
-    public function setManaCoast(string $manaCoast): self
-    {
-        $this->manaCoast = $manaCoast;
-
         return $this;
     }
 
@@ -104,13 +79,9 @@ class Card
     public function setText(string $text): self
     {
         $this->text = $text;
-
         return $this;
     }
 
-    /**
-     * @return Collection|Color[]
-     */
     public function getColors(): Collection
     {
         return $this->colors;
@@ -121,20 +92,15 @@ class Card
         if (!$this->colors->contains($color)) {
             $this->colors[] = $color;
         }
-
         return $this;
     }
 
     public function removeColor(Color $color): self
     {
         $this->colors->removeElement($color);
-
         return $this;
     }
 
-    /**
-     * @return Collection|Type[]
-     */
     public function getTypes(): Collection
     {
         return $this->types;
@@ -145,14 +111,35 @@ class Card
         if (!$this->types->contains($type)) {
             $this->types[] = $type;
         }
-
         return $this;
     }
 
     public function removeType(Type $type): self
     {
         $this->types->removeElement($type);
-
         return $this;
     }
+
+    public function getManaCost(): ?string
+    {
+        return $this->manaCost;
+    }
+
+    public function setManaCost(string $manaCost): self
+    {
+        $this->manaCost = $manaCost;
+        return $this;
+    }
+
+    public function getMultiverseId(): ?int
+    {
+        return $this->multiverseId;
+    }
+
+    public function setMultiverseId(int $multiverseId): self
+    {
+        $this->multiverseId = $multiverseId;
+        return $this;
+    }
+
 }

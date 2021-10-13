@@ -63,7 +63,6 @@ class Deck
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -75,7 +74,6 @@ class Deck
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -87,13 +85,9 @@ class Deck
     public function setMaxSize(int $maxSize): self
     {
         $this->maxSize = $maxSize;
-
         return $this;
     }
 
-    /**
-     * @return Collection|Card[]
-     */
     public function getCards(): Collection
     {
         return $this->cards;
@@ -104,14 +98,12 @@ class Deck
         if (!$this->cards->contains($card)) {
             $this->cards[] = $card;
         }
-
         return $this;
     }
 
     public function removeCard(Card $card): self
     {
         $this->cards->removeElement($card);
-
         return $this;
     }
 
@@ -123,7 +115,7 @@ class Deck
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
+
 }

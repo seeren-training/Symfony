@@ -48,13 +48,9 @@ class Color
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
-    /**
-     * @return Collection|Card[]
-     */
     public function getCards(): Collection
     {
         return $this->cards;
@@ -66,7 +62,6 @@ class Color
             $this->cards[] = $card;
             $card->addColor($this);
         }
-
         return $this;
     }
 
@@ -75,10 +70,7 @@ class Color
         if ($this->cards->removeElement($card)) {
             $card->removeColor($this);
         }
-
         return $this;
     }
-
-
 
 }
