@@ -5,14 +5,12 @@
     <title>{% block title %}Magic The Gathering Decks{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     {% endblock %}
 </head>
-<body class="{{ app.request.get('_route') }}">
+<body class="{{ app.request.get('_route') }} black">
 
 <header>
-    <nav>
+    <nav class="yellow darken-3">
         <div class="nav-wrapper">
             <a href="{{ path('mtgd_index') }}" class="brand-logo">MTGD</a>
             <a href="#" data-target="sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
@@ -35,13 +33,7 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 {% endblock %}
 
 </body>
 </html>
-
-
-
-
-
