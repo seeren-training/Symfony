@@ -3,5 +3,28 @@
 {% block title %}Create Deck - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Deck new</h1>
+    <div class="row">
+        <br>
+        <br>
+        <br>
+        <div class="col s12 offset-m2 m8">
+            <div class="card black-text">
+                <div class="card-content">
+                    <h1 style="margin: 0">Create Deck</h1>
+                </div>
+                {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+                <div class="card-content">
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.maxSize) }}
+                </div>
+                <div class="card-action">
+                    <button type="submit" class="btn">Create</button>
+                    <br>
+                    <br>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

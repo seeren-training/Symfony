@@ -1,0 +1,5 @@
+@import "@background";
+
+body.auth_signin {
+    @include mtgdBg;
+}

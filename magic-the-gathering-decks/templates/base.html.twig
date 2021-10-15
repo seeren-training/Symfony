@@ -7,10 +7,10 @@
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
-<body class="{{ app.request.get('_route') }} black">
+<body class="{{ app.request.get('_route') }} black white-text">
 
 <header>
-    <nav class="yellow darken-3">
+    <nav>
         <div class="nav-wrapper">
             <a href="{{ path('mtgd_index') }}" class="brand-logo">MTGD</a>
             <a href="#" data-target="sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>

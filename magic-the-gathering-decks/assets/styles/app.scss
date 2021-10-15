@@ -1,0 +1,12 @@
+@import 'app-theme';
+@import '~materialize-css/sass/materialize';
+@import '~material-design-icons/iconfont/material-icons.css';
+@import 'auth';
+@import 'card';
+@import 'deck';
+@import 'mtgd';
+@import 'user';
+
+nav .brand-logo {
+    padding: 0 1em !important;
+}

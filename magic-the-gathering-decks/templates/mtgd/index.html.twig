@@ -1,6 +1,21 @@
 {% extends 'base_visitor.html.twig' %}
 
 {% block body %}
-    <h1>MTGD</h1>
+    <div class="center">
+        <h1>
+            <br>
+            Magic The Gathering Deck
+            <br>
+        </h1>
+        <h5>
+            <br>
+            Browse MTG Cards and Manage Decks
+        </h5>
+        <div>
+            <br>
+            <a class="waves-effect waves-light btn-large" href="{{ path('user_new') }}">Sign Up</a>
+            <a class="waves-effect waves-light btn-large" href="{{ path('auth_signin') }}">Sign In</a>
+        </div>
+    </div>
 {% endblock %}
 

@@ -2,11 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Deck;
+use App\Form\DeckType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/deck')]
+#[IsGranted('ROLE_USER')]
 class DeckController extends AbstractController
 {
 
@@ -17,9 +22,17 @@ class DeckController extends AbstractController
     }
 
     #[Route('/new', name: 'deck_new', methods: ['GET', 'POST'])]
-    public function new(): Response
+    public function new(Request $request): Response
     {
-        return $this->render('deck/new.html.twig');
+        $deck = new Deck();
+        $form = $this->createForm(DeckType::class, $deck);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            dump('Save the deck');
+        }
+        return $this->render('deck/new.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/{name<\w{1,256}>}', name: 'deck_show', methods: ['GET'])]

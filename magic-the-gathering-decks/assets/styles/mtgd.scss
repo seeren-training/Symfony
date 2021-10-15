@@ -1,0 +1,5 @@
+@import "@background";
+
+body.mtgd_index {
+    @include mtgdBg;
+}

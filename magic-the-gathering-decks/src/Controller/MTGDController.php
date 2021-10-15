@@ -12,6 +12,9 @@ class MTGDController extends AbstractController
     #[Route('/', name: 'mtgd_index', methods: ['GET'])]
     public function index(): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('card_index');
+        }
         return $this->render('mtgd/index.html.twig');
     }
 
