@@ -20,7 +20,7 @@ class DeckType extends AbstractType
             ->add('maxSize', RangeType::class, [
                 "attr" => [
                     "min" => 40,
-                    "max" => 80,
+                    "max" => 120,
                     "step" => 4
                 ]
             ]);

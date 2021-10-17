@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block nav_items %}
-    <li>
+    <li class="{{ app.request.get('_route') == 'deck_index' ?  'active' : '' }}">
         <a href="{{ path('deck_index') }}">Decks</a>
     </li>
     <li>
@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block sidenav_items %}
-    <li>
-        <a href="{{ path('auth_logout') }}">Signout</a>
+    <li class="{{ app.request.get('_route') == 'deck_index' ?  'active' : '' }}">
+        <a href="{{ path('deck_index') }}">Decks</a>
     </li>
 {% endblock %}

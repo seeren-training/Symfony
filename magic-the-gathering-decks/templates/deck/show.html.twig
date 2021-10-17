@@ -3,5 +3,18 @@
 {% block title %}Deck - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Deck show</h1>
+    <h1>{{ deck.name }}</h1>
+    <p>Cards: {{ deck.cards|length }}/{{ deck.maxSize }}</p>
+    <blockquote>{{ deck.description }}</blockquote>
+    {% if not deck.cards|length %}
+        <p>
+            You do not have Cards in this Deck, do you want to
+            <a href="{{ path('deck_delete', { 'name': deck.name }) }}">delete</a>
+            it?
+        </p>
+    {% else %}
+        {% for card in deck.cards %}
+            {# TODO display cards #}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

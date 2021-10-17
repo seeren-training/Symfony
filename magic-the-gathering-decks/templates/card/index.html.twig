@@ -6,8 +6,9 @@
     <ul class="deck-picker right hide-on-med-and-down">
         <select>
             <option disabled selected>Select Deck</option>
-            <option>Offensive Deck</option>
-            <option>Defensive Deck</option>
+            {% for deck in decks %}
+                <option>{{ deck.name }}</option>
+            {% endfor %}
         </select>
     </ul>
 {% endblock %}

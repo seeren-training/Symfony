@@ -1,16 +1,14 @@
-.deck-picker {
-  margin: .8em 1em 0;
-  padding: 0 .5em;
+body.card_index {
+  .deck-picker {
+    margin: .8em 1em 0;
+    padding: 0 .5em;
 
-  input {
-    color: white;
+    span {
+      @extend .truncate;
+    }
+
+    input {
+      color: white;
+    }
   }
 }
-
-//.dropdown-content li.disabled > span {
-//    color: #757575 !important;
-//}
-//
-//.dropdown-content li > span {
-//    color: #ad1457 !important;
-//}

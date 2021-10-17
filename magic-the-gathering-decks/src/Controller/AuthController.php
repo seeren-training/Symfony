@@ -13,13 +13,12 @@ class AuthController extends AbstractController
     #[Route('/signin', name: 'auth_signin', methods: ['GET', 'POST'])]
     public function signin(AuthenticationUtils $authenticationUtils): Response
     {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('mtgd_index');
-        }
-        return $this->render('auth/signin.html.twig', [
-            'last_username' => $authenticationUtils->getLastUsername(),
-            'error' => $authenticationUtils->getLastAuthenticationError(),
-        ]);
+        return $this->getUser()
+            ? $this->redirectToRoute('mtgd_index')
+            : $this->render('auth/signin.html.twig', [
+                'last_username' => $authenticationUtils->getLastUsername(),
+                'error' => $authenticationUtils->getLastAuthenticationError(),
+            ]);
     }
 
     #[Route('/signout', name: 'auth_logout', methods: ['GET'])]

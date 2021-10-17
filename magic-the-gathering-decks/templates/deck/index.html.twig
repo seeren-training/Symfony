@@ -3,10 +3,33 @@
 {% block title %}Decks - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Deck index</h1>
-    <div>
-        <a href="{{ path('deck_new') }}" class="btn-floating btn-large waves-effect waves-light red">
-            <i class="material-icons">add</i>
-        </a>
+    <div class="row">
+        {% if not decks %}
+            <h1>Start to <a href="{{ path('deck_new') }}">create</a> a Deck</h1>
+        {% else %}
+            <br>
+            {% for deck in decks %}
+                <div class="col s6 m4 l3">
+                    <a href="{{ path('deck_show', { 'name': deck.name }) }}">
+                        <div class="col s12 card black-text">
+                            <h4 class="card-title truncate">{{ deck.name }}</h4>
+                            <p class="card-content center-align">{{ deck.cards|length }}/{{ deck.maxSize }}</p>
+                            <div class="card-action truncate">
+                                {{ deck.description }}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+            <div class="col s6 m4 l3">
+                <a href="{{ path('deck_new') }}">
+                    <div class="deck_new col s12 card black-text center-align">
+                        <span class="btn-floating btn-large waves-effect waves-light red">
+                            <i class="material-icons">add</i>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
