@@ -12,10 +12,10 @@ ___
 
 ## TOC
 
-* [Current tasks](#current-tasks)
-* [MTG Cards](#mtg-cards)
-* [Active Deck](#active-deck)
-* [Be creative](#be-creative)
+* [Current tasks](#👨🏻‍💻-current-tasks)
+* [MTG Cards](#👨🏻‍💻-mtg-cards)
+* [Active Deck](#👨🏻‍💻-active-deck)
+* [Be creative](#👨🏻‍💻-be-creative)
 
 ___
 
