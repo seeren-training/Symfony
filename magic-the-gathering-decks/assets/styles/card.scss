@@ -11,4 +11,23 @@ body.card_index {
       color: white;
     }
   }
+
+  .col {
+    margin-bottom: 1.5em;
+    min-height: 17.5em;
+
+    .progress {
+      margin: 0 0 -5px 0;
+    }
+
+    img {
+      transition: opacity .5s;
+      width: 100%;
+      opacity: 1;
+
+      &[data-src] {
+        opacity: 0;
+      }
+    }
+  }
 }

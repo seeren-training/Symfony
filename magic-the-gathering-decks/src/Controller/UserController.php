@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,9 +17,8 @@ class UserController extends AbstractController
 
     #[Route('/signup', name: 'user_new', methods: ['GET', 'POST'])]
     public function register(
-        Request                     $request,
-        UserPasswordHasherInterface $userPasswordHasherInterface,
-        EntityManagerInterface      $entityManager): Response
+        Request     $request,
+        UserService $userService): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('mtgd_index');
@@ -26,12 +26,7 @@ class UserController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($userPasswordHasherInterface->hashPassword(
-                $user,
-                $form->get('plainPassword')->getData()
-            ));
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $userService->addUser($user, $form->get('plainPassword')->getData());
             return $this->redirectToRoute('mtgd_index');
         }
         return $this->render('user/new.html.twig', [

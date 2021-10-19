@@ -25,7 +25,7 @@ class Card
     private $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $text;
 
@@ -40,7 +40,7 @@ class Card
     private $types;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     private $manaCost;
 

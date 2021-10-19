@@ -1,4 +1,4 @@
-{% extends 'base_catalog.html.twig' %}
+{% extends 'base_member.html.twig' %}
 
 {% block title %}Deck - {{ parent() }}{% endblock %}
 
@@ -9,7 +9,7 @@
     {% if not deck.cards|length %}
         <p>
             You do not have Cards in this Deck, do you want to
-            <a href="{{ path('deck_delete', { 'name': deck.name }) }}">delete</a>
+            <a href="{{ path('deck_delete', { 'name': deck.name }) }}?token={{ csrf_token('deck_delete') }}">delete</a>
             it?
         </p>
     {% else %}

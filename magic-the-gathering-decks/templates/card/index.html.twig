@@ -1,18 +1,51 @@
-{% extends 'base_catalog.html.twig' %}
+{% extends 'base_member.html.twig' %}
 
 {% block title %}Cards - {{ parent() }}{% endblock %}
 
 {% block sub_nav_items %}
-    <ul class="deck-picker right hide-on-med-and-down">
-        <select>
-            <option disabled selected>Select Deck</option>
-            {% for deck in decks %}
-                <option>{{ deck.name }}</option>
-            {% endfor %}
-        </select>
-    </ul>
+    {% if decks|length %}
+        <ul class="deck-picker right hide-on-med-and-down">
+            <select>
+                <option disabled selected>Select Deck</option>
+                {% for deck in decks %}
+                    <option data-active="{{ path('card_active', {'name': deck.name}) }}"{% if app.session.get('active-deck') == deck.name %} selected{% endif %}>{{ deck.name }}</option>
+                {% endfor %}
+            </select>
+        </ul>
+    {% endif %}
 {% endblock %}
 
 {% block body %}
-    <h1>Card index</h1>
+    {% if not cards %}
+        <div class="row">
+            <h1>Service is temporary unavailable</h1>
+        </div>
+    {% else %}
+        <div class="row">
+            <br>
+            {% for card in cards %}
+                <div class="col s6 m4 l3">
+                    <div class="progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                    <img data-src="https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={{ card.multiverseId ?? 666666 }}&type=card"/>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <ul class="center pagination">
+                <li class="{{ options.page == 1 ? 'disabled' : 'waves-effect' }}">
+                    <a href="?{{ {
+                        'page': options.page == 1 ? 1 : options.page -1,
+                    }|url_encode }}"><i class="material-icons">chevron_left</i></a>
+                </li>
+                <li class="active"><a>{{ options.page }}</a></li>
+                <li class="waves-effect">
+                    <a href="?{{ {
+                        'page': options.page + 1,
+                    }|url_encode }}"><i class="material-icons">chevron_right</i></a>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
 {% endblock %}

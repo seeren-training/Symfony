@@ -4,12 +4,14 @@
     <nav class="pink darken-3">
         <div class="nav-wrapper">
             <ul class="left">
-                <li><a href="">All</a></li>
-                <li><a href="">Red</a></li>
-                <li><a href="">Green</a></li>
-                <li><a href="">Blue</a></li>
-                <li><a href="">Dark</a></li>
-                <li><a href="">White</a></li>
+                <li {{ not options.colors ? ' class="active"' : '' }}>
+                    <a href="?page=1">All</a>
+                </li>
+                {% for color in colors %}
+                    <li{{ options.colors|capitalize == color.name ? ' class="active"' : '' }}>
+                        <a href="?color={{ color.name|lower }}&page=1">{{ color.name == 'Black' ? 'Dark' : color.name }}</a>
+                    </li>
+                {% endfor %}
             </ul>
             {% block sub_nav_items %}{% endblock %}
         </div>
