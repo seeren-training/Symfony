@@ -41,7 +41,8 @@ class CardController extends AbstractController
         ColorRepository $colorRepository,
         TypeRepository $typeRepository,
         DeckRepository $deckRepository,
-        HttpClientInterface $httpClient): Response
+        HttpClientInterface $httpClient,
+        CacheItemPoolInterface $cacheItemPool): Response
     {
         $colors = $colorRepository->findAll();
         $color = current(array_filter(
@@ -55,35 +56,43 @@ class CardController extends AbstractController
         if (0 === $options['page']) {
             $options['page'] = 1;
         }
-        $apiCards = $httpClient->request(
-            'GET',
-            'https://api.magicthegathering.io/v1/cards?' . http_build_query($options)
-        )->toArray()['cards'];
-        $cards = [];
-        foreach ($apiCards as $apiCard) {
-            $card = new Card();
-            $card->setName($apiCard['name']);
-            if (array_key_exists('text', $apiCard)) {
-                $card->setText($apiCard['text']);
-            }
-            if (array_key_exists('multiverseid', $apiCard)) {
-                $card->setMultiverseId($apiCard['multiverseid']);
-            }
-            if (array_key_exists('manaCost', $apiCard)) {
-                $card->setManaCost($apiCard['manaCost']);
-            }
-            if (array_key_exists('colors', $apiCard)) {
-                foreach ($apiCard['colors'] as $color) {
-                    $card->addColor($colorRepository->findOneByName($color));
+        $endpoint = 'cards?pageSize=25&' . http_build_query($options);
+        $item = $cacheItemPool->getItem($endpoint);
+        if (!$item->isHit()) {
+            $apiCards = $httpClient->request(
+                'GET',
+                'https://api.magicthegathering.io/v1/' . $endpoint
+            )->toArray()['cards'];
+            $cards = [];
+            foreach ($apiCards as $apiCard) {
+                $card = new Card();
+                $card->setName($apiCard['name']);
+                if (array_key_exists('text', $apiCard)) {
+                    $card->setText($apiCard['text']);
                 }
-            }
-            if (array_key_exists('types', $apiCard)) {
-                foreach ($apiCard['types'] as $type) {
-                    $card->addType($typeRepository->findOneByName($type));
+                if (array_key_exists('multiverseid', $apiCard)) {
+                    $card->setMultiverseId($apiCard['multiverseid']);
                 }
+                if (array_key_exists('manaCost', $apiCard)) {
+                    $card->setManaCost($apiCard['manaCost']);
+                }
+                if (array_key_exists('colors', $apiCard)) {
+                    foreach ($apiCard['colors'] as $color) {
+                        $card->addColor($colorRepository->findOneByName($color));
+                    }
+                }
+                if (array_key_exists('types', $apiCard)) {
+                    foreach ($apiCard['types'] as $type) {
+                        $card->addType($typeRepository->findOneByName($type));
+                    }
+                }
+                $cards[] = $card;
             }
-            $cards[] = $card;
+        } else {
+            $cards = $item->get();
         }
+
+
         return $this->render('card/index.html.twig', [
             'colors' => $colors,
             'cards' => $cards,
