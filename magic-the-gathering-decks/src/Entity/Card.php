@@ -45,7 +45,7 @@ class Card
     private $manaCost;
 
     /**
-     * @ORM\Column(type="integer", unique=true)
+     * @ORM\Column(type="integer", unique=true, nullable=true)
      */
     private $multiverseId;
 

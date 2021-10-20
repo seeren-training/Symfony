@@ -38,59 +38,54 @@ class CardController extends AbstractController
     #[Route('/card', name: 'card_index', methods: ['GET'])]
     public function index(
         Request $request,
-        DeckRepository $deckRepository,
         ColorRepository $colorRepository,
         TypeRepository $typeRepository,
-        HttpClientInterface $httpClient,
-        CacheItemPoolInterface $cacheItemPool
-    ): Response
+        DeckRepository $deckRepository,
+        HttpClientInterface $httpClient): Response
     {
+        $colors = $colorRepository->findAll();
+        $color = current(array_filter(
+            $colors,
+            fn($color) => $color->getName() === ucfirst(strtolower($request->query->get('color')))
+        ));
         $options = [
-            'page' => (int) $request->query->get('page') ?? 1
+            'page' => abs((int)$request->query->get('page')),
+            'colors' => false !== $color ? strtolower($color->getName()) : null
         ];
-        $endpoint = 'cards?' . http_build_query($options);
-        try {
-            $item = $cacheItemPool->getItem($endpoint);
-            if (!$item->isHit()) {
-                $apiCards = $httpClient->request(
-                    'GET',
-                    'https://api.magicthegathering.io/v1/' . $endpoint
-                )->toArray()['cards'];
-                $cards = [];
-                foreach ($apiCards as $apiCard) {
-                    $card = new Card();
-                    $card->setName($apiCard['name']);
-                    if (array_key_exists('colors', $apiCard)) {
-                        foreach ($apiCard['colors'] as $color) {
-                            $card->addColor($colorRepository->findOneByName($color));
-                        }
-                    }
-                    if (array_key_exists('types', $apiCard)) {
-                        foreach ($apiCard['types'] as $type) {
-                            $card->addType($typeRepository->findOneByName($type));
-                        }
-                    }
-                    if (array_key_exists('manaCost', $apiCard)) {
-                        $card->setManaCost($apiCard['manaCost']);
-                    }
-                    if (array_key_exists('multiverseid', $apiCard)) {
-                        $card->setMultiverseId($apiCard['multiverseid']);
-                    }
-                    if (array_key_exists('text', $apiCard)) {
-                        $card->setText($apiCard['text']);
-                    }
-                    $cards[] = $card;
-                }
-                $item->set($cards);
-                $cacheItemPool->save($item);
-            } else {
-                $cards = $item->get();
+        if (0 === $options['page']) {
+            $options['page'] = 1;
+        }
+        $apiCards = $httpClient->request(
+            'GET',
+            'https://api.magicthegathering.io/v1/cards?' . http_build_query($options)
+        )->toArray()['cards'];
+        $cards = [];
+        foreach ($apiCards as $apiCard) {
+            $card = new Card();
+            $card->setName($apiCard['name']);
+            if (array_key_exists('text', $apiCard)) {
+                $card->setText($apiCard['text']);
             }
-        } catch (\Throwable $e) {
-            dump($e);
-            $cards = [];
+            if (array_key_exists('multiverseid', $apiCard)) {
+                $card->setMultiverseId($apiCard['multiverseid']);
+            }
+            if (array_key_exists('manaCost', $apiCard)) {
+                $card->setManaCost($apiCard['manaCost']);
+            }
+            if (array_key_exists('colors', $apiCard)) {
+                foreach ($apiCard['colors'] as $color) {
+                    $card->addColor($colorRepository->findOneByName($color));
+                }
+            }
+            if (array_key_exists('types', $apiCard)) {
+                foreach ($apiCard['types'] as $type) {
+                    $card->addType($typeRepository->findOneByName($type));
+                }
+            }
+            $cards[] = $card;
         }
         return $this->render('card/index.html.twig', [
+            'colors' => $colors,
             'cards' => $cards,
             'options' => $options,
             'decks' => $deckRepository->findByUser($this->getUser(), [

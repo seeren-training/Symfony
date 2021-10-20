@@ -1,4 +1,4 @@
-{% extends 'base_member.html.twig' %}
+{% extends 'base_catalog.html.twig' %}
 
 {% block title %}Cards - {{ parent() }}{% endblock %}
 
@@ -28,7 +28,7 @@
                     <div class="progress">
                         <div class="indeterminate"></div>
                     </div>
-                    <img data-src="https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={{ card.multiverseId ?? 666666 }}&type=card"/>
+                    <img data-src="https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={{ card.multiverseId ?? 0 }}&type=card"/>
                 </div>
             {% endfor %}
         </div>
@@ -36,13 +36,15 @@
             <ul class="center pagination">
                 <li class="{{ options.page == 1 ? 'disabled' : 'waves-effect' }}">
                     <a href="?{{ {
-                        'page': options.page == 1 ? 1 : options.page -1,
+                        'page': 1 == options.page ? 1 : options.page - 1,
+                        'color': options.colors
                     }|url_encode }}"><i class="material-icons">chevron_left</i></a>
                 </li>
                 <li class="active"><a>{{ options.page }}</a></li>
                 <li class="waves-effect">
                     <a href="?{{ {
                         'page': options.page + 1,
+                        'color': options.colors
                     }|url_encode }}"><i class="material-icons">chevron_right</i></a>
                 </li>
             </ul>

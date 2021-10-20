@@ -10,13 +10,13 @@ class UserService
 
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private HasherService          $hasherService)
+        private HasherService $hasherService)
     {
     }
 
     public function addUser(
         PasswordAuthenticatedUserInterface $user,
-        string                             $plainPassword): bool
+        string $plainPassword): bool
     {
         $user->setPassword($this->hasherService->hash($user, $plainPassword));
         $this->entityManager->persist($user);
