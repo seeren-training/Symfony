@@ -3,7 +3,6 @@
 *  🔖 **Projet**
 *  🔖 **Profiler**
 *  🔖 **Logs**
-*  🔖 **Configuration**
 
 ___
 
@@ -52,30 +51,3 @@ Par défaut le log se fait en mode développement et production, mais en product
 Il est possible de spécifier différents fichiers de log par channel (doctrine, event, security, request).
 
 [Channels](https://symfony.com/doc/current/logging/channels_handlers.html)
-
-___
-
-## 📑 [Configuration](https://symfony.com/doc/current/configuration.html)
-
-Chaque fonctionnalité peut se configurer dans le dossier `config/`. Quand il s’agit de fonctionnalité additionnelles, leur configuration se fait dans `config/packages`.
-
-Par exemple pour configurer un fichier de log spécifique pour les erreurs http, il faudra en fonction de l'environnement modifier le fichier de configuration correspondant.
-
-* config/packages/dev/monolog.yml
-
-```yml
-monolog:
-    handlers:
-        http:
-            type: stream
-            path: "%kernel.logs_dir%/%kernel.environment%.request.log"
-            level: debug
-            channels: ["request"]
-        main:
-            type: stream
-            path: "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
-            channels: ["!event", "!request"]
-```
-
-Chaque configuration doit se modifier en étudiant la documentation en rapport.

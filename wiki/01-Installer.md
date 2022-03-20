@@ -12,9 +12,9 @@ ___
 
 Symfony est un ensemble de composants PHP ainsi qu'un framework MVC libre écrit en PHP. Il fournit des fonctionnalités modulables et adaptables qui permettent de faciliter et d’accélérer le développement d'un site web.
 
-### 🏷️ **[Projet](https://github.com/symfony/symfony)**
+### 🏷️ **[License](https://github.com/symfony/symfony)**
 
-Plus de 2000 contributeurs font avancer le projet.
+Sous license MIT, Plus de 2000 contributeurs font avancer le projet.
 
 ![image](https://raw.githubusercontent.com/seeren-training/Symfony/master/wiki/resources/contributeurs.png)
 
@@ -22,39 +22,117 @@ Le fondateur du Framework et co-fondateur de Sensio, `Fabien Potencier` est un c
 
 ![image](https://raw.githubusercontent.com/seeren-training/Symfony/master/wiki/resources/contributeurs-detail.png)
 
-L'agence web française `SensioLabs` est à l'origine du framework Sensio Framework2. À force de toujours recréer les mêmes fonctionnalités de gestion d'utilisateurs, gestion ORM, etc., elle a développé ce framework pour ses propres besoins3. Comme ces problématiques étaient souvent les mêmes pour d'autres développeurs, le code a été par la suite partagé avec la communauté des développeurs PHP.
+L'agence web française `SensioLabs` est à l'origine du framework Sensio Framework2. À force de toujours recréer les mêmes fonctionnalités de gestion d'utilisateurs, gestion ORM, etc., elle a développé ce framework pour ses propres besoins. Comme ces problématiques étaient souvent les mêmes pour d'autres développeurs, le code a été par la suite partagé avec la communauté des développeurs PHP.
 
 > Le 5 septembre 2017, Symfony passe la barre du milliard de téléchargements.5
 
-
 ### 🏷️ **[Versions](https://symfony.com/releases)**
 
-Le framework en est à la version 5 mais la LTS est la version 4.4.
+Le framework en est à la version 6 et la LTS est la version 5.4.6
 
 ![image](https://raw.githubusercontent.com/seeren-training/Symfony/master/wiki/resources/roadmap.png)
 
+Observons le planning des prochaines conférences Symfony.
+
+[Planning conférence](https://live.symfony.com/2022-paris/schedule#session-627)
+
+Les thèmes les plus  récurents sont:
+
+* [DDD](https://fr.wikipedia.org/wiki/Conception_pilot%C3%A9e_par_le_domaine)
+* [Api Platform](https://api-platform.com/)
+
+### 🏷️ **[Composants](https://symfony.com/components)**
+
+Les composants Symfony sont des bibliothèques découplées pour les applications PHP. Testé au combat dans des centaines de milliers de projets et téléchargé des milliards de fois.
+
+Observons concretement quelques composants.
+
+#### [VarDumper](https://symfony.com/doc/current/components/var_dumper.html#the-dump-function)
+
+Fournit des mécanismes pour parcourir n'importe quelle variable PHP arbitraire.
+
+```php
+dump($someVar);
+```
+
+#### [Translation](https://symfony.com/doc/current/translation.html)
+
+Fournit des outils pour internationaliser votre application.
+
+```php
+echo $translator->trans('Hello World');
+```
+
+#### [HttpClient](https://symfony.com/doc/current/http_client.html)
+
+Un client HTTP de bas niveau prenant en charge les wrappers de flux PHP et cURL. Il fournit également des utilitaires pour consommer des API.
+
+```php
+$json = HttpClient::create()
+    ->request(
+        'GET',
+        'https://api.github.com/repos/symfony/symfony-docs'
+    )->getContent();
+```
+
 ___
 
-## 📑 [Installation](https://www.php.net/manual/fr/language.oop5.visibility.php)
+## 📑 Environnement
 
-Nous allons installer la dernière version bien que n'étant pas la `LTS`, il y a peu de changements entre la LTS et la `latest`. Il est possible d'installer Symfony avec Composer ou avec le birary Symfony.
+### 🏷️ **Prerequis**
 
-### 🏷️ **[CLI](https://symfony.com/download)**
+La dernière version de Symfony possède comme prérequis la présence de php 8.0.2 présent dans la variable d'environnement PATH.
+
+```bash
+php -v
+```
+
+Le package manager du langage est également un prérequis.
+
+```bash
+composer -v
+```
+
+Un outil utilisé de façon optionelle est Git.
+
+```bash
+git --version
+```
+
+___
+
+👨🏻‍💻 Manipulation
+
+Vérifiez vos prérequis et ajustez si necessaire.
+
+___
+
+Nous allons installer la dernière version bien que n'étant pas la `LTS`, il y a peu de changements entre la LTS et la `latest`. Il est possible d'installer Symfony avec Composer ou avec le binary Symfony.
+
+### 🏷️ **[Symfony](https://symfony.com/download)**
 
 Tous les packages peuvent s'installer avec le package manager. Cependant le framework propose un binary pour ce faire.
+
+___
+
+👨🏻‍💻 Manipulation
+
+Installer Symfony CLI.
+
+___
 
 ![image](https://raw.githubusercontent.com/seeren-training/Symfony/master/wiki/resources/symfony-cli.png)
 
 * *Créer un projet*
 
 ```bash
-symfony new my_project_name --full
+symfony new my_project_name --webapp
 ```
 
 * *Créer un projet pour une version*
 
 ```bash
-symfony new my_project_name --full --version=4.4
+symfony new my_project_name --webapp --version=4.4
 ```
 
 Vous remarquez que le CLI n'est qu'un shortcut vers l'installation avec composer.
@@ -65,11 +143,19 @@ Vous remarquez que le CLI n'est qu'un shortcut vers l'installation avec composer
 symfony server:start
 ```
 
-* *Vérifier les pré-requis*
+* *Arreter le serveur*
 
 ```bash
-symfony server check:requirements
+symfony server:stop
 ```
+
+___
+
+👨🏻‍💻 Manipulation
+
+Initialisez un projet et démarrez le server.
+
+___
 
 ### 🏷️ **[Composer](https://getcomposer.org/)**
 
@@ -93,59 +179,31 @@ composer create-project symfony/website-skeleton:"^4.4" my_project_name
 php -S localhost:8000 -t public
 ```
 
-* *Vérifier les pré-requis*
-
-Pour vérifier les pré-requis nous allons apprendre à installer des packages complémentaire et prendre l'habitude de nous référer à la documentation.
-
-___
-
-👨🏻‍💻 Manipulation
-
-Installer un projet avec Symfony CLI ou Composer.
-
 ___
 
 ## 📑 Compléments
 
-Il est possible d'avoir besoin de package complémentaire et nous prendrons le prétexte des pré-requis pour apprendre à le faire.
+Observons quelques points qui garantissent une bonne execution de notre programme et une bonne pratique syntaxique.
 
-Pour installer un package il faut utiliser composer. Depuis la version 4, Symfony Flex donne des alias aux packages à installer et exécute des recettes avant/après son installation pour pré marcher son utilisation.
+### 🏷️ **Checker**
 
-### 🏷️ **Installation**
-
-Pour installer un package qui vérifie nos pre requis si vous n'avez pas installer le bainary symfony nous pouvons utiliser cette commande que nous trouvons sur la documentation.
-
-[Requirements](https://symfony.com/doc/4.2/reference/requirements.html)
+Symfony attend de l'environnement d'avoir un cache php, une version des caractères à jour et une configuration du php.ini qui alloue des tailles d'exécution minimales.
 
 ```bash
-composer require symfony/requirements-checker
-```
-
-Et le server Flex propose les alias suivants: `req-check`, `req-checker`, `req-checks`, `requirement-check`, `requirement-checker`, `requirements-checker`.
-
-### 🏷️ **Recette**
-
-Suite à son installation nous sommes informé d'action supplémentaires.
-
-![image](https://raw.githubusercontent.com/seeren-training/Symfony/master/wiki/resources/receipt.png)
-
-Pour exécuter ce package qui donne des informations supplémentaires, vous pouvez exécuter son CLI.
-
-```bash
-vendor/bin/requirements-checker
+symfony check:req
 ```
 
 ___
 
 👨🏻‍💻 Manipulation
 
-Réglez les recommandations optionnelles concernant le PHP accelerator, les tailles du cache et les extensions en modifiant votre php.ini et en regardant les extensions et leur activation.
+Reglons les points critiques s'il y en a.
 
 ___
 
-## 📑 Nommage
+### 🏷️ **Nommage**
 
-Pour vous référer à des conventions et un coding style, je vous invite à observer le PSR-1 et les ressources Symfony.
+Pour nous référer à des conventions et un coding style, je vous invite à observer le PSR-1 et les ressources Symfony.
 
 [PSR-1](https://www.php-fig.org/psr/psr-1/)
 
@@ -161,7 +219,7 @@ Observez le CS et la convention de nommage, posez des questions en rapport
 
 ___
 
-## 📑 CLI
+### 🏷️ **Console**
 
 Avec ce Framework nous disposons d'un utilitaire pour automatiser des taches et nous offrir des fonctionnalité: la console.
 
@@ -174,6 +232,7 @@ Nous observons majoritairement des commandes concernant:
 * Le debug
 * L'accès aux données
 * La création
+* ...
 
 ___
 

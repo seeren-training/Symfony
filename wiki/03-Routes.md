@@ -1,9 +1,7 @@
-# Routes
+# HTTP
 
 *  🔖 **HTTP**
-*  🔖 **Controller**
 *  🔖 **Route**
-*  🔖 **Debug**
 
 ___
 
@@ -13,22 +11,18 @@ La notion de route doit être acquise. Une route décrit la requête HTTP. Le Ke
 
 ![image](https://raw.githubusercontent.com/seeren-training/Symfony/master/wiki/resources/http.png)
 
-___
-
-## 📑 [Controller](https://symfony.com/doc/current/bundles/SensioGeneratorBundle/commands/generate_controller.html)
+### 🏷️ **[Controller](https://symfony.com/doc/current/controller.html)**
 
 L'utilitaire Maker est disponible pour créer un controller et ses actions.
-
-### 🏷️ **Controller**
 
 * Créer un controller
 
 ```bash
-bin/console/make:controller
+bin/console make:controller
 ```
 
 ```bash
-bin/console/make:controller Foo
+bin/console make:controller Foo
 ```
 
 La création d'un dossier dépend de votre environnement.
@@ -36,180 +30,276 @@ La création d'un dossier dépend de votre environnement.
 * Unix
 
 ```bash
-bin/console/make:controller Foo\\Bar
+bin/console make:controller Foo\\Bar
 ```
 
 * Window
 
 ```bash
-bin/console/make:controller Foo\Bar
+bin/console make:controller Foo\Bar
 ```
 
 Vous constatez qu'un controller a été créé et que dans templates, un dossier correspondant à ses vues à été généré. Au dessus du controller vous constatez une annotation particulière.
 
-#### **Annotation action**
+### 🏷️ **[Response](https://symfony.com/doc/current/components/http_foundation.html#response)**
+
+Toutes les actions d'un controller renvoient une response.
+
+#### **Markup**
+
+Par défaut la méthode render attend le nom d'un template et un tableau de données pour fournir au body d'une response le template dynamisé.
 
 ```php
-/**
- * @Route("/foo", name="foo")
- */
-public function index(): Response
+return $this->render('foo/index.html.twig', [
+    'controller_name' => 'FooController',
+]);
 ```
 
-Cela indique que l'action du controller doit être invoquée quand le chemin d'url correspond à "/foo". Si vous souhaitez une nouvelle action, vous pouvez la créer dans votre IDE et fournir une route en utilisant la même notation, attention, le chemin d'url et le nom de la route doit être unique.
+#### **Json**
 
-#### **Annotation class**
-
-Dans un controller vous risquez d'avoir plus d'une action. Si toutes ces actions ont une base de chemin d'url commune, il est possible de spécifier cette base sur la classe et de compléter le chemin sur l'action. `Le nommage suivant est conseillé`.
+Vous disposez d'une méthode pour le format `json`.
 
 ```php
-/**
- * @Route("/foo")
- */
-class FooController extends AbstractController
+return $this->json([
+    'controller_name' => 'ResponseController',
+]);
+```
+
+#### **Custom**
+
+Il est possible de personnaliser complétement la réponse en la créant sois même et en l'enrichissant programmatiquement.
+
+```php
+$response = new Response();
+$response->headers->set('Content-Type', 'text/plain');
+return $response
+    ->setContent('Created')
+    ->setStatusCode(Response::HTTP_CREATED);
+```
+
+#### **Reditection**
+
+Il est possible de rediriger vers une route nommée.
+
+```php
+return $this->redirectToRoute('bar');
+```
+
+Les url arbitraires peuvent également être redirigées.
+
+```php
+return $this->redirect('https://www.google.com');
+```
+
+
+### 🏷️ **[Request](https://symfony.com/doc/current/components/http_foundation.html#overriding-the-request)**
+
+La requette en cours de l'utilisateur est partagée par l'ensemble des acteurs du programme et pour l'obtenir nous devons utiliser le concept d'injection de dépendance.
+
+```php
+public function index(Request $request): Response
 {
-    /**
-     * @Route("/", name="foo_index")
-     */
-    public function index(): Response
+    return $this->render('http/request/index.html.twig', [
+        'controller_name' => 'RequestController',
+    ]);
+}
 ```
 
-### 🏷️ **Action**
+#### **URL**
 
-Par défaut l'action du controller est identifié par "index", la convention ne parle pas du nommage des actions, admettez les actions suivantes pour du CRUD.
-
+La partie subjective d'url est semblable à SERVER['PATH_INFO'] obtenue par le built in server.
 
 ```php
-/**
- * @Route("/foo")
- */
-class FooController extends AbstractController
+$request->getPathInfo();
 ```
 
-* Récupérer tous les items
+#### **Méthode**
+La méthode est comparable à SERVER['REQUEST_METHOD'].
 
 ```php
-/**
- * @Route("/", name="foo_index")
- */
-public function index
+$request->getMethod();
 ```
 
-* Créer un item
+#### **GET**
+
+L'ensemble de $_GET se trouve sur la propriété query
 
 ```php
-/**
- * @Route("/new", name="foo_new")
- */
-public function new
+$request->query->get('foo');
 ```
 
-* Récupérer un item
+#### **POST**
+
+L'ensemble de $_POST se trouve sur la propriété request
 
 ```php
-/**
- * @Route("/{id}", name="foo_show")
- */
-public function show
+$request->request->get('foo');
 ```
 
-* Modifier un item
+#### **SERVER**
+L'ensemble de $_SERVER se trouve sur la propriété server
 
 ```php
-/**
- * @Route("/{id}/edit", name="foo_edit")
- */
-public function edit
+$request->server->get('SCRIPT_FILENAME');
 ```
 
-* Supprimer un item
+___
 
-```php
-/**
- * @Route("/{id}", name="foo_delete")
- */
-public function delete
-```
+👨🏻‍💻 Manipulation
 
-Ne retenez de ce listing que l'identifiant des actions, nous allons maintenant observer la notation des routes, les contraintes, les arguments et autre.
+Créez quelques controllers!
 
 ___
 
 ## 📑 [Routes](https://symfony.com/doc/current/routing.html)
 
-Une route est constitué de plusieurs attributs.
+Une route est constitué d'au moins une propriété qui correspond au path info. 
 
-### 🏷️ **Path**
+### 🏷️ **Les formats**
+
+Il existe plusieurs formats disponibles pour noter les routes.
+
+#### **Annotation**
+
+Pour les versions de php inférieure à la 8, le format des annotation était utilisé.
 
 ```php
 /**
- * @Route("/foo")
+ * @Route("/http/route/annotation")
  */
 ```
 
-C'est la partie d'url après le host et le port. C'est ce qui permet de faire correspondre l'url avec une action.
+#### **Attribut**
+
+Depuis php 8, le format attribut a remplacé le format annotation.
+
+```php
+#[Route('/http/route/attribut')]
+```
+
+#### **Yaml**
+
+Il est également possible de centraliser les déclarations de routes dans des fichiers de configuration.
+
+```yaml
+routeYml:
+    controller: App\Controller\Http\RouteController::index
+    path: route/yaml
+```
+
+Il est également possible d'importer des fichiers pour éclater les routes sur plusieurs fichiers.
+
+```yaml
+controllersYaml:
+    resource: routes/controllers.yaml
+```
+
+___
+
+👨🏻‍💻 Manipulation
+
+Quel est le format le plus pratique?
+
+___
+
+### 🏷️ **Les propriétés**
+
+Une route peut avoir un chemin dynamique ou être contraintes.
 
 #### **[Paramètre](https://symfony.com/doc/current/routing.html#route-parameters)**
 
-Un chemin peut avoir des paramètres.
-
-Pour le chemin `/foo/7` l'action sera bien invoquée. L'identifiant du paramètre respecte les conventions de nommage des variables. Il est possible de déclarer plusieurs paramètres.
+Un chemin peut avoir des paramètres. Cette notation dans la déclaration de la route pour le paramètre d'url s'appel un `slug`.
 
 ```php
-/**
- * @Route("/foo/{id}", name="foo_index")
- */
-public function index(): Response
+#[Route('/product/{id}')]
 ```
+
+Pour le chemin `/product/7` l'action sera bien invoquée. L'identifiant du paramètre respecte les conventions de nommage des variables. Il est possible de déclarer plusieurs paramètres.
 
 Il est possible de récupérer la variable en la déclarant.
 
 ```php
-/**
- * @Route("/foo/{id}", name="foo_index")
- */
+#[Route('/product/{id}')]
 public function index(int $id): Response
 ```
 
-#### **[Paramètre optionnel](https://symfony.com/doc/current/routing.html#optional-parameters)**
-
-Il est possible de déclarer un paramètre optionnel, s'il est présent dans l'url ou non l'action sera invoquée.
+Il est possible de déclarer un [paramètre optionnel](https://symfony.com/doc/current/routing.html#optional-parameters), s'il est présent dans l'url ou non l'action sera invoquée.
 
 ```php
-/**
- * @Route("/foo/{id}", name="foo_index")
- */
-public function index(int $id = 1): Response
+#[Route('/product/{id}')]
+public function index(int $id = null): Response
 ```
 
-#### **[Contrainte](https://symfony.com/doc/current/routing.html#parameters-validation)**
+[Validation](https://symfony.com/doc/current/routing.html#parameters-validation)
 
 Il est possible de contraindre un paramètre en utilisant les expression régulières.
 
 ```php
-/**
- * @Route("/foo/{id{id<[0-9]{1,3}>}}", name="foo_index")
- */
-public function index(int $id): Response
+ #[Route('/product/{id<[0-9]{1,3}>}')]
 ```
 
-### 🏷️ **Name**
+#### **Name**
 
-Bien qu'optionnel, il est important de déclarer une valeur à l'attribut name de la route avec comme convention de nommage, le nom du controller et celui de l'action en snake_case. Ce nom sera utiliser pour créer des liens par exemple.
-
-### 🏷️ **Méthods**
-
-Il est possible de contraindre une méthode HTTP sur une route.
+Bien qu'optionnel, il est important de déclarer une valeur à l'attribut name de la route avec comme convention de nommage, le namespace et celui de l'action en snake_case. Ce nom sera utiliser pour créer des liens par exemple.
 
 ```php
-/**
- * @Route("/new", name="foo_new", methods={"GET","POST"})
- */
+ #[Route('/product', name: 'app_product')]
 ```
 
-### 🏷️ **Autre**
+#### **Méthods**
 
-Il est possible de contraindre sur la valeur d'une entête, un nom de domaine et autre!
+Il est possible de contraindre une ou plusieursméthode HTTP sur une action.
+
+```php
+#[Route('/product', methods: ['POST'])]
+```
+
+### 🏷️ **Bonne pratique**
+
+Le nommage suivant est conseillé.
+
+#### **Annotation class**
+
+Dans un controller vous risquez d'avoir plus d'une action. Si toutes ces actions ont une base de chemin d'url commune, il est possible de spécifier cette base sur la classe et de compléter le chemin sur l'action. 
+
+```php
+#[Route('/product')]
+class ProductController extends AbstractController
+```
+
+#### **Annotation action**
+
+Par défaut l'action du controller est identifié par "index", la convention ne parle pas du nommage des actions, admettez les actions suivantes pour du CRUD.
+
+* Récupérer tous les items
+
+```php
+#[Route('/', name: 'app_product_index', methods: ['GET'])]
+```
+
+* Créer un item
+
+```php
+#[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
+```
+
+* Récupérer un item
+
+```php
+#[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
+```
+
+* Modifier un item
+
+```php
+#[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
+```
+
+* Supprimer un item
+
+```php
+#[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
+```
 
 ___
 
@@ -225,4 +315,8 @@ ___
 
 👨🏻‍💻 Manipulation
 
-Créer les controllers anticipables en utilisant le nommage observé.
+Créer des controllers en utilisant le nommage observé.
+
+
+
+
